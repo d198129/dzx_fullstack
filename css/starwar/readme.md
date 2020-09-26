@@ -1,5 +1,5 @@
 # 星球大战CSS3特效开发
-- 能力怎长点
+-能力增长点
     学习的目的在于不断设计能力增长点
     1.hackthon 黑客精神
     2.html/css/js 离开API
@@ -12,7 +12,7 @@
     4.css基础
     [css animation]
     (https://www.w3cschool.com.cn/cssref/)
-- 学习愿望
+-学习愿望
  极大的学习愿景
  去名企可以做高级玩意，代码世界的导演，
     html/css/js
