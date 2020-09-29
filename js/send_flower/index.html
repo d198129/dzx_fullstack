@@ -13,7 +13,10 @@
         //描述性很强的语言
         // 对象字面量
         class Flower {
-
+            constructor(flowerType, flowernum) {
+                this.flowerType = flowerType;
+                this.flowernum = flowernum;
+            }
         }
         const lyb = {
             name: '刘杨宝',
@@ -38,8 +41,8 @@
         };
         const xm = {
             name: '小美',
-            receiveFlower: function() {
-                console.log('收到了花');
+            receiveFlower: function(sender, flower) {
+                console.log('收到了心上人' + sender.name + '的' + flower.flowernum + '朵' + flower.flowerType);
             }
         };
         const xh = {
