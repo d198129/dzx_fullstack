@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudentInfo</title>
+    <link rel="stylesheet" href="https://weui.io/style/weui.css">
+</head>
+
+<body>
+    <div class="weui-cells">
+        <template id="weui-cell">
+      <a class="weui-cell  weui-cell_access" href="javascript:">
+        <div class="weui-cell__bd">
+          <p class="weui-cell__bd--default"></p>
+        </div>
+        <div class="weui-cell__ft">
+        </div>
+      </a>
+        </template>
+    </div>
+
+    <script>
+        let ss = {
+            name: '姜伯约',
+            hometown: '萍乡',
+            isSingle: false,
+        };
+        let lz = {
+            name: '李尊',
+            hometown: '抚州',
+        };
+        let xt = {
+            name: '小涛',
+            hometown: '吉安'
+        }
+        let students = [ss, lz];
+        students.push(xt);
+        let container = document.querySelector('.weui-cells')
+            // students.forEach
+        let temp = document.getElementById('weui-cell');
+        let p = temp.content.querySelector('.weui-cell__bd--default');
+        let ft = temp.content.querySelector('.weui-cell__ft');
+        for (let student of students) {
+            // 构建动态的html
+            // ${} es6中的${}——用于用于反单引号``中字符串拼接（拼接创建的变量）
+            p.textContent = student.name;
+            ft.textContent = student.hometown;
+
+            let clone = document.importNode(temp.content, true);
+            container.appendChild(clone);
+
+        }
+    </script>
+</body>
+
+</html>
