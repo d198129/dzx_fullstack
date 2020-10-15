@@ -2,7 +2,13 @@
   margin: 0;
   padding: 0;
 }
+li {
+  list-style: none;
+}
 #toast {
+  display: none;
+}
+#toast1 {
   display: none;
 }
 .movie {
@@ -26,7 +32,7 @@
   text-align: center;
 }
 .movie-info {
-  padding: 10px;
+  padding: 15px;
   background-color: #1e2025;
 }
 .movie-info__desc {
@@ -79,4 +85,109 @@
 }
 .movie-info__desc .info-container .btn-wrap .flex .iconfont {
   font-size: 14px;
+}
+.movie-info__rate {
+  background-color: #161619;
+  padding: 10px;
+  border-radius: 4px;
+  margin-top: 15px;
+}
+.movie-info__rate .rate-title {
+  display: flex;
+  justify-content: space-between;
+}
+.movie-info__rate .rate-title__left {
+  color: #fff;
+}
+.movie-info__rate .rate-title__left .icon-maomi {
+  color: #f00;
+}
+.movie-info__rate .rate-title__right {
+  color: #68686b;
+  font-size: 12px;
+}
+.movie-info__rate .rate-detail {
+  display: flex;
+}
+.movie-info__rate .rate-detail__left {
+  flex: 454;
+  display: flex;
+  box-sizing: border-box;
+}
+.movie-info__rate .rate-detail__left .grade {
+  text-align: center;
+}
+.movie-info__rate .rate-detail__left .grade h2 {
+  color: #fcc300;
+}
+.movie-info__rate .rate-detail__left .grade p {
+  color: #68686b;
+}
+.movie-info__rate .rate-detail__left .star {
+  text-align: right;
+  display: flex;
+  align-items: center;
+}
+.movie-info__rate .rate-detail__left .star .list {
+  margin: 2px 0;
+  display: flex;
+  align-items: center;
+}
+.movie-info__rate .rate-detail__left .star .list .star-num {
+  width: 40px;
+  font-size: 0;
+}
+.movie-info__rate .rate-detail__left .star .list .star-num img {
+  width: 8px;
+  height: 8px;
+}
+.movie-info__rate .rate-detail__left .star .list .persent {
+  width: 78px;
+  height: 4px;
+  background-color: #252528;
+  position: relative;
+}
+.movie-info__rate .rate-detail__left .star .list .persent .persent-val {
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background-color: #fcc300;
+  width: 80%;
+}
+.movie-info__rate .rate-detail__right {
+  flex: 266;
+  display: flex;
+  align-items: center;
+}
+.movie-info__rate .rate-detail__right img {
+  height: 46px;
+}
+.movie-desc {
+  padding: 15px;
+}
+.movie-desc .content {
+  transition: all 0.6s ease;
+}
+.movie-desc .line-clamp {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  word-wrap: break-word;
+  word-break: break-all;
+  overflow: hidden;
+}
+.movie-desc .arrow {
+  text-align: center;
+  font-size: 16px;
+}
+.movie-desc .arrow .iconfont {
+  display: block;
+  transform: rotateZ(0deg);
+  transition: all 0.6s ease;
+}
+.movie-desc .arrow .up {
+  transform: rotateZ(180deg);
+  display: block;
 }

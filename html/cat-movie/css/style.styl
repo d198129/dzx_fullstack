@@ -1,7 +1,11 @@
 *
     margin 0
     padding 0
+li
+    list-style none
 #toast
+    display none
+#toast1
     display none
 .movie
     width 100%
@@ -20,7 +24,7 @@
             flex 1
             text-align center
     &-info
-        padding 10px
+        padding 15px
         background-color #1e2025
         &__desc
             width 100%
@@ -64,4 +68,86 @@
                             margin-right 10px
                         .iconfont
                             font-size 14px
-                    
+        &__rate
+            background-color #161619
+            padding 10px
+            border-radius 4px
+            margin-top 15px
+            .rate-title
+                display flex
+                justify-content space-between
+                &__left
+                    color #ffffff
+                    .icon-maomi
+                        color red
+                &__right
+                    color #68686b
+                    font-size 12px
+            .rate-detail
+                display flex
+                &__left
+                    flex 454
+                    display flex
+                    box-sizing border-box
+                    .grade
+                        // margin-left 15px
+                        text-align center
+                        h2
+                            color #fcc300
+                        p
+                            color #68686b
+                    .star
+                        // margin-right 15px
+                        text-align right
+                        display flex
+                        align-items center
+                        .list
+                            margin 2px 0
+                            display flex
+                            align-items center
+                            .star-num
+                                width 40px
+                                font-size 0
+                                img 
+                                    width 8px
+                                    height 8px
+                            .persent
+                                width 78px
+                                height 4px
+                                background-color #252528
+                                position relative
+                                .persent-val
+                                    display inline-block
+                                    position absolute
+                                    left 0
+                                    top 0
+                                    height 100%
+                                    background-color #fcc300
+                                    width 80%
+                &__right
+                    flex 266
+                    display flex
+                    align-items center
+                    img
+                        height 46px
+    &-desc
+        .content
+            transition all 0.6s ease
+        padding 15px
+        .line-clamp
+            display -webkit-box
+            -webkit-box-orient vertical
+            -webkit-line-clamp 3
+            word-wrap break-word
+            word-break break-all
+            overflow hidden
+        .arrow
+            text-align center
+            font-size 16px
+            .iconfont
+                display block
+                transform rotateZ(0deg)
+                transition all 0.6s ease 
+            .up
+                transform rotateZ(180deg)
+                display block
