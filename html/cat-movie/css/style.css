@@ -2,6 +2,10 @@
   margin: 0;
   padding: 0;
 }
+a {
+  text-decoration: none;
+  color: #000;
+}
 li {
   list-style: none;
 }
@@ -190,4 +194,31 @@ li {
 .movie-desc .arrow .up {
   transform: rotateZ(180deg);
   display: block;
+}
+.movie-actor-title h2 {
+  font-weight: normal;
+}
+.movie-actor-list {
+  margin-top: 10px;
+}
+.movie-actor-list ul {
+  display: flex;
+  overflow-x: scroll;
+}
+.movie-actor-list ul li {
+  margin-right: 10px;
+}
+.movie-actor-list ul li a {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.movie-actor-list ul li a .name {
+  font-size: 14px;
+  margin-top: 5px;
+}
+.movie-actor-list ul li a .role {
+  color: #9b9da2;
+  font-size: 14px;
 }

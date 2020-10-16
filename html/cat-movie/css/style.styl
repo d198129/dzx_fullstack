@@ -1,6 +1,9 @@
 *
     margin 0
     padding 0
+a
+    text-decoration none
+    color #000000
 li
     list-style none
 #toast
@@ -151,3 +154,27 @@ li
             .up
                 transform rotateZ(180deg)
                 display block
+    // &-minititle 
+    //     background-color #fefefe
+    &-actor
+        &-title
+            h2
+                font-weight normal
+        &-list
+            margin-top 10px
+            ul
+                display flex
+                overflow-x scroll
+                li 
+                    margin-right 10px
+                    a
+                        display flex
+                        flex-direction column
+                        justify-content center
+                        align-items center
+                        .name
+                            font-size 14px
+                            margin-top 5px
+                        .role
+                            color #9b9da2
+                            font-size 14px
