@@ -10,8 +10,7 @@
     [baidu](http://www.baidu.com)
     ![baidu](./images/column.jpg)
     4. css基础
-    [css animation]
-    (https://www.w3cschool.com.cn/cssref/)
+    [css animation](https://www.w3cschool.com.cn/cssref/)
 - 学习愿望
  极大的学习愿景
  去名企可以做高级玩意，代码世界的导演，

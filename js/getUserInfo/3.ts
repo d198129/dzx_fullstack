@@ -5,6 +5,5 @@ interface IUser {
 type IUserInfoFunc = (user: IUser)
     => string;
 
-const getUserInfo: IUserInfoFunc = (user) => {
+const getUserInfo: IUserInfoFunc = (user) =>
     `name:${user.name},age:${user.age}`
-}

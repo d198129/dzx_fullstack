@@ -43,9 +43,33 @@
         }
         /* modifier */
         
+        i {
+            font-style: italic;
+        }
+        
         .weui-btn_loading.weui-btn_primary {
             background-color: #06ae56;
             color: #ffffff;
+        }
+        
+        .weui-loading {
+            margin: -0.2em 0.34em 0 0;
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+            vertical-align: middle;
+            background-size: 100%;
+            background-image: url('img/loading.png');
+            animation: weuiLoading 1s steps(12, end) infinite;
+        }
+        
+        @keyframes weuiLoading {
+            0% {
+                transform: rotate3d(0, 0, 1, 0deg);
+            }
+            100% {
+                transform: rotate3d(0, 0, 1, 360deg);
+            }
         }
         /* .weui-btn_large {} */
     </style>

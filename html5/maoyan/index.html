@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.bootcdn.net/ajax/libs/weui/2.3.0/style/weui.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styl/common.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- panel -->
+    <!-- tabbar -->
+    <div class="weui-panel__bd"></div>
+    <script src="lib/template.js"></script>
+    <script>
+        var movieList = document.querySelector('.weui-panel__bd');
+        fetch('data/movie_list.json')
+            .then(data => data.json())
+            .then(data => {
+                for (let movie of data) {
+                    movieList.innerHTML += getMovieListTemplate(movie);
+                }
+            })
+    </script>
+</body>
+
+</html>
+
+</html>

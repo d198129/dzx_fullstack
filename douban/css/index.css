@@ -1,0 +1,130 @@
+#anony-nav {
+    width: 1080px;
+    margin: 0 auto 25px;
+}
+
+#anony-nav .anony-nav-links {
+    float: right;
+    margin-top: 6px;
+}
+
+#anony-nav .anony-nav-links li {
+    display: inline-block;
+    zoom: 1;
+    margin: 0 14px 0 0;
+}
+
+#anony-nav .anony-nav-links li a {
+    display: inline-block;
+    zoom: 1;
+    width: 40px;
+    height: 20px;
+    overflow: hidden;
+    margin: 0;
+    line-height: 20em;
+    outline: none;
+    vertical-align: middle;
+    background: transparent url('../images/anony_nav_logo.png') no-repeat 100% 100%;
+}
+
+#anony-nav .anony-nav-links li:nth-child(1) a {
+    background-position: 0 0;
+}
+
+#anony-nav .anony-nav-links li:nth-child(2) a {
+    background-position: -60px 0;
+}
+
+#anony-nav .anony-nav-links li:nth-child(3) a {
+    background-position: -120px 0;
+}
+
+#anony-nav .anony-nav-links li:nth-child(4) a {
+    background-position: -299px 0;
+}
+
+#anony-nav .anony-nav-links li:nth-child(5) a {
+    background-position: -180px 0;
+}
+
+#anony-nav .anony-nav-links li:nth-child(6) a {
+    background: transparent url('../images/ic_read_home_nav.png') no-repeat 100% 100%;
+    background-position: 0 0;
+}
+
+#anony-nav .anony-nav-links li:nth-child(7) a {
+    background-position: -241px 0;
+}
+
+#anony-nav .anony-nav-links li:nth-child(8) a {
+    background: transparent url('../images/ic_shijian_home_nav.png') no-repeat 100% 100%;
+    background-position: 0 0;
+}
+
+#anony-nav .anony-nav-links li:nth-child(9) a {
+    background-position: -421px 0;
+}
+
+#anony-nav h1 {
+    display: inline-block;
+    zoom: 1;
+    vertical-align: middle;
+    width: 160px;
+    height: 34px;
+    margin: 0 20 0 0;
+    font-weight: normal;
+    overflow: hidden;
+    background: url('../images/logo_db.png') no-repeat 0 0;
+}
+
+#anony-nav h1 a {
+    display: block;
+    height: 34px;
+    line-height: 10em;
+}
+
+#anony-nav .anony-srh {
+    position: relative;
+    display: inline-block;
+    zoom: 1;
+    vertical-align: middle;
+    width: 270px;
+    height: 30px;
+    border: 1px solid #c3c3c3;
+}
+
+#anony-nav .anony-srh .inp {
+    display: block;
+    height: 30px;
+    overflow: hidden;
+}
+
+#anony-nav .anony-srh .inp input {
+    width: 240px;
+    border: none;
+    font-size: 13px;
+    height: 20px;
+    padding: 5px;
+}
+
+#anony-nav .anony-srh .bn {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 30px;
+    height: 30px;
+    overflow: hidden;
+    cursor: pointer;
+    background: url('../images/bn_srh_1.png') 50% 50% no-repeat;
+}
+
+#anony-nav .anony-srh .bn input {
+    border: none;
+    overflow: hidden;
+    width: 30px;
+    height: 30px;
+    font-size: 0;
+    cursor: pointer;
+    color: transparent;
+    background-color: transparent;
+}

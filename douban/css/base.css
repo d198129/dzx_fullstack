@@ -1,0 +1,54 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: #111;
+    cursor: pointer;
+}
+
+a:visited {
+    color: #669;
+    text-decoration: none;
+}
+
+body {
+    padding-top: 30px;
+}
+
+input {
+    font-family: inherit;
+    margin-right: 3px;
+    vertical-align: middle;
+    outline: none;
+}
+
+input,
+button,
+textarea,
+select {
+    font-style: inherit;
+    font-weight: inherit
+}
+
+form {
+    display: block;
+    border: 0;
+}
+
+body,
+th,
+td {
+    font: 12px Helvetica, Arial, sans-serif;
+    line-height: 1.62;
+}
+
+html {
+    color: #111;
+}

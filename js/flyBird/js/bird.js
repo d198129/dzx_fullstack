@@ -23,7 +23,7 @@ var bird = {
                 bird.fallSpeed = 0;
                 clearInterval(bird.flyTime);
                 clearInterval(bird.wingTimer);
-                // clearInterval(landRUnTimer);
+                // clearInterval(landRunTimer);
             }
             if (bird.fallSpeed > 12) {
                 bird.fallSpeed = 12;
