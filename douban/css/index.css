@@ -1,3 +1,5 @@
+/* 头部样式开始 */
+
 #anony-nav {
     width: 1080px;
     margin: 0 auto 25px;
@@ -128,3 +130,6 @@
     color: transparent;
     background-color: transparent;
 }
+
+
+/* 头部样式结束 */
