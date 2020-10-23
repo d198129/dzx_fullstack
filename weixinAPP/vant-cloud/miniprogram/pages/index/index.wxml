@@ -17,3 +17,4 @@
         <van-field value="{{ groupName }}" label="群组名" placeholder="起个名字吧" bind:change="onGroupNameChange" />
     </view>
 </van-dialog>
+<van-notify id="van-notify" />
