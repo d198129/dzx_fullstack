@@ -22,6 +22,10 @@ body {
     padding-top: 30px;
 }
 
+div {
+    display: block;
+}
+
 input {
     font-family: inherit;
     margin-right: 3px;
