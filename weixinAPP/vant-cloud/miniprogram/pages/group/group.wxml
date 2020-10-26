@@ -7,10 +7,10 @@
             </view>
             我的群组
         </view>
-        <view class="public-item">
-            <view class="public-item-name">测试群组名</view>
+        <view class="public-item" wx:for="{{groupList}}" wx:key="item">
+            <view class="public-item-name">{{item.name}}</view>
             <view>
-                <image src="" class="creater" />
+                <image src="{{item.createBy.avatarUrl}}" class="creater" />
                 <van-icon name="arrow" style="color: #c6c6c6" />
             </view>
         </view>

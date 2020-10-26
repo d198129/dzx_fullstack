@@ -15,6 +15,7 @@ Page({
         })
     },
     createGroup: function() {
+        const self = this
         if (self.groupName === '') {
             Notify({
                 message: '起个名字吧',
@@ -28,7 +29,6 @@ Page({
             return
         }
         //把groupName传到后端
-        const self = this
         wx.cloud.callFunction({
             name: "createGroup",
             data: {
