@@ -16,7 +16,7 @@ Page({
     },
     createGroup: function() {
         const self = this
-        if (self.groupName === '') {
+        if (self.data.groupName === '') {
             Notify({
                 message: '起个名字吧',
                 duration: 1500,

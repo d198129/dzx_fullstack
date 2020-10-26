@@ -16,3 +16,4 @@
         </view>
     </view>
 </view>
+<!-- <button open-type="getUserInfo" bindgetuserinfo="getUserInfo">授权</button> -->

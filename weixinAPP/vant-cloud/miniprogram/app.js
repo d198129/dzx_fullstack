@@ -1,7 +1,7 @@
 //app.js
 App({
     onLaunch: function(options) {
-        const slef = this
+        const self = this
         if (!wx.cloud) {
             console.error('请使用 2.2.3 或以上的基础库以使用云能力')
         } else {
@@ -16,14 +16,15 @@ App({
         }
         // this.globalData.shareParam = options.query
         //查看是否授权登录
+        self.globalData = {}
         wx.getSetting({
             success(settingRes) {
-                console.log(settingRes);
+                // console.log(settingRes);
                 //应经授权
                 if (settingRes.authSetting['scope.userInfo']) {
                     wx.getUserInfo({ //获取用户信息
                         success(infoRes) {
-                            console.log(infoRes);
+                            // console.log(infoRes);
                             self.globalData.userInfo = infoRes.userInfo
                             wx.cloud.callFunction({
                                 name: 'createUser',
@@ -43,6 +44,5 @@ App({
                 }
             }
         })
-        this.globalData = {}
     }
 })

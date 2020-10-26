@@ -22,7 +22,7 @@ exports.main = async(event, context) => {
             }
         })
     } else {
-        const insertResult = await db.collection.add({
+        const insertResult = await db.collection('user').add({
             data: {
                 avatarUrl: event.avatarUrl,
                 nickName: event.nickName,
