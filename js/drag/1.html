@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .drag,
+        .drag1 {
+            width: 200px;
+            height: 200px;
+            background-color: green;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        
+        .drag1 {
+            top: 0;
+            left: 300px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="drag">drag1</div>
+    <div class="drag1">drag2</div>
+    <!-- mouseDown mouseMove mouseUp -->
+    <script>
+        const drag = document.querySelector('.drag');
+        const drag1 = document.querySelector('.drag1');
+        dragEle(drag);
+        dragEle(drag1);
+
+        function dragEle(ele) {
+            const onMove = (event) => {
+                let x = event.clientX,
+                    y = event.clientY;
+                console.log(123, `translate3d(${x}px,${y}px,0)`);
+                ele.style.transform = `translate3d(${x}px,${y}px,0)`;
+            }
+            ele.addEventListener('mousedown', () => {
+                //如果绑定再drag区域的话，只要超出它，move就不行
+                document.addEventListener('mousemove', onMove)
+                    //第一次拖完后把上一次的事件取消掉
+                document.addEventListener('mouseup', () => {
+                    document.removeEventListener('mousemove', onMove)
+                })
+            })
+        }
+    </script>
+</body>
+
+</html>
