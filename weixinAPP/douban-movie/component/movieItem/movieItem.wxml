@@ -5,7 +5,7 @@
         <view class="name">{{movie.title}}</view>
         <view class="score-wrapper">
             <!-- 评分 -->
-            <ratingstar score="{{movie.numberStars}}"></ratingstar>
+            <ratingStar score="{{movie.numberStars}}"></ratingStar>
             <view class="score">{{movie.rating.average}}</view>
         </view>
     </view>

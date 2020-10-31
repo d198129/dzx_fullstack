@@ -27,7 +27,7 @@ Page({
             },
             {
                 title: "Top250",
-                url: "/v2/movie/top250",
+                url: "/v2/movie/us_box",
                 movies: []
             }
         ]
