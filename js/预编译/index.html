@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // let name = '蜗牛'
+
+        // function foo() {
+        //     let name = '婷婷'
+        //     console.log(name);
+        // }
+        // foo()
+        // var a = 1
+
+        // function fn(a) {
+        //     var a = 2
+
+        //     function a() {}
+        //     var b = a
+        //     console.log(a);
+        // }
+
+        // GO:{
+        //     global:undefined,
+        //     fn:function(){}
+        // }
+        // var global = 100;
+
+        // function fn() {
+        //     console.log(global);
+        // }
+        // AO: {
+
+        // }
+        global = 100
+
+        function fn() {
+            console.log(global);
+            global = 200;
+            console.log(global);
+            var global = 300;
+        }
+        fn()
+        var global
+    </script>
+</body>
+
+</html>
