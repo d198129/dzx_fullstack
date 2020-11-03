@@ -54,13 +54,38 @@
 // obj2.foo()
 
 //隐式丢失
-function foo() {
-    console.log(this.a);
-}
-var obj = {
-    a: 3,
-    foo: foo
-}
-var b = obj.foo
-var a = 'hello'
-bar()
+// function foo() {
+//     console.log(this.a);
+// }
+// var obj = {
+//     a: 3,
+//     foo: foo
+// }
+// var bar = obj.foo
+// var a = 'hello'
+// bar()
+
+//显式绑定
+// var a = {
+//     user: '蜗牛',
+//     fn: function (q, w) {
+//         console.log(this.user);
+//         console.log(q+w);
+//     }
+// }
+// var b = a.fn
+// b.call(a,3,4)
+
+// var a = {
+//     user: '蜗牛',
+//     fn: function (q, w) {
+//         console.log(this.user);
+//         console.log(q+w);
+//     }
+// }
+// var b = a.fn
+// b.apply(a,[3,4])//传数组
+
+// var b = a.fn
+// var c = b.bind(a,3,4)
+// c()
