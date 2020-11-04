@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>canvas</title>
+    <style>
+        .cicle {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 1px solid red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="cicle"></div>
+    <input type="file" id="file">
+    <img src="images/guo.png" alt="" id="img" style="display: none;">
+    <!-- url uri -->
+    <img src="" alt="" id="avatar">
+    <!-- drawRac rect 图 -->
+    <!-- <audio src=""></audio>
+    <video src=""></video> -->
+    <canvas id="preview" width="290px" height="290px"></canvas>
+    <script>
+        window.onload = function() {
+                const img = document.getElementById('img')
+                const file = document.getElementById('file')
+                const preview = document.getElementById('preview');
+                const ctx = preview.getContext('2d');
+                ctx.drawImage(img, 0, 0, 290, 290)
+                file.addEventListener('change', (event) => {
+                    let file = event.target.files[0]
+                        //  text/css text/javascript img/jpeg  MIME类型
+                    console.log(file);
+                    if (!file.type.includes('image/')) {
+                        return;
+                    }
+                    //预览
+                    //画一下
+                    const avatar = document.getElementById('avatar');
+                    let fileReader = new FileReader();
+                    fileReader.onload = function(e) {
+                        avatar.src = fileReader.result; //代表那张图片
+                        console.log(fileReader.result);
+                    }
+                    fileReader.readAsDataURL(file);
+                })
+            }
+            // setTimeout(() => {
+            //     ctx.drawImage(img, 0, 0, 290, 290)
+            // }, 1000)
+    </script>
+</body>
+
+</html>
