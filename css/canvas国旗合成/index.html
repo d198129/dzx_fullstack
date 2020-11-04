@@ -20,7 +20,7 @@
     <input type="file" id="file">
     <img src="images/guo.png" alt="" id="img" style="display: none;">
     <!-- url uri -->
-    <img src="" alt="" id="avatar">
+    <img src="" alt="" id="avatar" style="display: none;">
     <!-- drawRac rect 图 -->
     <!-- <audio src=""></audio>
     <video src=""></video> -->
@@ -31,7 +31,7 @@
                 const file = document.getElementById('file')
                 const preview = document.getElementById('preview');
                 const ctx = preview.getContext('2d');
-                ctx.drawImage(img, 0, 0, 290, 290)
+                // ctx.drawImage(img, 0, 0, 290, 290)
                 file.addEventListener('change', (event) => {
                     let file = event.target.files[0]
                         //  text/css text/javascript img/jpeg  MIME类型
@@ -46,6 +46,10 @@
                     fileReader.onload = function(e) {
                         avatar.src = fileReader.result; //代表那张图片
                         console.log(fileReader.result);
+                    }
+                    avatar.onload = function() {
+                        ctx.drawImage(avatar, 0, 0, 290, 290)
+                        ctx.drawImage(img, 0, 0, 290, 290)
                     }
                     fileReader.readAsDataURL(file);
                 })

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //es6 数组的方法
+        let arr = [{
+                a: 1
+            }, {
+                a: 2
+            }, {
+                a: 3
+            }]
+            //map 映射
+        let newArr = arr.map((item) => {
+            return item.a * 2
+        })
+        console.log(newArr);
+        let arr1 = arr.map((item) => {
+            return `<li>${item.a}</li>`
+        })
+        console.log(arr1);
+
+        //reduce 循环的意思 叠加
+        let arr2 = [1, 2, 3, 4, 5, 6]
+            //1 pre:=> 0 item:1 =>1
+            //2 pre:=> 1 item:2 =>3
+            //2 pre:=> 3 item:3 =>6
+        let sum = arr2.reduce((pre, item) => {
+            return pre + item;
+        }, 0);
+        console.log(sum);
+        let arr3 = [{
+                a: 1
+            }, {
+                b: 2
+            }, {
+                c: 3
+            }]
+            //{a:1,b:2,c:3}
+        let arr4 = arr3.reduce((pre, item) => {
+            //1 pre:{} item:{a:1} =>{a:1}
+            //2 pre:{a:1} item:{b:2} =>{a:1,b:2}
+            //3 pre:{a:1,b:2} item:{c:3} =>{a:1,b:2,c:3}
+            return {...pre,
+                ...item
+            } //展开合并对象的过程
+            //object.assign()
+        }, {})
+    </script>
+</body>
+
+</html>
