@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        li {
+            list-style: none;
+        }
+    </style>
+</head>
+
+<body>
+    <input type="text" name="time" id="suggest">
+    <div id="wrap"></div>
+    <script>
+        //防抖：电梯关门
+        //对于高频触发的事件，不是触发一次执行一次
+        const suggest = document.querySelector('#suggest');
+        let timeout = null;
+        //z -> timeout 500 xxx
+        //j ->在500ms之内，清楚上一次的定时器，上一次无意义的搜索
+        //-> 新建了一个 500ms
+        //l ->在500ms之内，清楚上一次的定时器，上一次无意义的搜索
+        //-> 新建了一个 500ms
+        //不输了 -> 等500ms 发出
+        function handleInput(event) {
+            //http://neteasecloudmusicapi.zhaoboy.com/search?keywords=%E6%B5%B7%E9%98%94%E5%A4%A9%E7%A9%BA
+            // console.log(val);
+            if (timeout) clearTimeout(timeout);
+            timeout = setTimeout(() => {
+                const val = event.target.value;
+                if (!val) return '';
+                // console.log(val);
+                const url = `http://neteasecloudmusicapi.zhaoboy.com/search?keywords=${val}`;
+                // const song = `https://api.imjad.cn/cloudmusic/?type=song&id=${url}`
+                // console.log(song);
+                fetch(url)
+                    .then(res => res.json())
+                    .then(data => {
+                        let lis = data.result.songs.map((item) => {
+                            return `<li>${item.name}</li>`
+                        })
+                        let html = lis.join('')
+                        document.querySelector('#wrap').innerHTML = html;
+                    })
+            }, 500)
+        }
+        suggest.addEventListener('input', handleInput);
+    </script>
+</body>
+
+</html>
