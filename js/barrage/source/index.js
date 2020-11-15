@@ -129,12 +129,13 @@ function send() {
     let value = txt.value
     let time = video.currentTime
     let color = color1.value
-    let fontSize = range.value
+    let fontsize = range.value
+    console.log(fontsize);
     let obj = {
         value,
         time,
         color,
-        fontSize
+        fontsize
     }
     canvasBarrage.add(obj);
     txt.value = ''
