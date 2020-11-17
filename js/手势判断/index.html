@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .wrap {
+            width: 200px;
+            height: 200px;
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 长按 点(click) 滑动 
+  长按：计时器 mouseUp(leave)
+  移动click有延迟 300ms 他需要延迟一会看是双击事件还是单击事件
+  -->
+    <a href="www.baidu.com" target="_blank">baidu</a>
+    <div class="wrap">
+    </div>
+    <script>
+        //标准 click touchstart touchmove touchend
+        //事件：捕获阶段 目标阶段 冒泡阶段
+        const wrap = document.querySelector('.wrap');
+        //自定义事件
+        wrap.addEventListener('press', () => {
+
+        })
+        wrap.addEventListener('panleft', () => {
+
+        })
+        let timeout = null;
+
+        function start() {
+            timeout = setTimeout(() => {
+                console.log('press 发生了');
+                let e = new CustomEvent('press');
+                wrap.dispatchEvent(e);
+            }, 500)
+        }
+        wrap.addEventListener('click', () => {
+                console.log('click 发生了');
+            })
+            //touchstart -> move ->end -> click
+        let startX = 0,
+            startY = 0;
+        wrap.addEventListener('touchstart', () => {
+            // console.log('tap 发生了');
+            startX = event.touches[0].clientX;
+            startY = event.touches[0].clientY;
+            start();
+            event.preventDefault(); //阻止默认事件的发生
+        })
+        document.querySelector('a')
+            .addEventListener('click', (event) => {
+                event.preventDefault();
+                event.stopImmediatePropagation()
+            })
+        document.querySelector('a')
+            .addEventListener('click', () => {
+                console.log('xxxx');
+            })
+
+        function end() {
+            clearTimeout(timeout);
+        }
+        wrap.addEventListener('touchmove', (event) => {
+            let diffx = event.touches[0].clientX - startX;
+            let diffy = event.touches[0].clientY - startY;
+            if (Math.abs(diffx) > Math.abs(diffy)) {
+                // if (Math.abs(diffx) < 100) return;
+                if (diffx ** 2 + diffy ** 2 > 100) return;
+                if (diffx > 0) {
+                    console.log('右滑动');
+                } else {
+                    console.log('左滑动');
+                }
+            }
+        })
+        wrap.addEventListener('touchend', () => {
+            end();
+        })
+    </script>
+</body>
+
+</html>
