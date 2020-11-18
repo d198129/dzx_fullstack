@@ -37,12 +37,12 @@ exports.main = async(event, context) => {
         pageArray.push(obj);
     }
     //取最新 章节
-    const lastsection = $('book-last').eq(0).find('dd');
+    const lastsection = $('.book_last').eq(0).find('dd');
     let lastData = []
     for (i = 0; i < lastsection.length; i++) {
         let obj = {};
         obj['sectionName'] = $(lastsection[i]).find('a').text();
-        obj['sectionName'] = $(lastsection[i]).find('a').attr('href');
+        obj['sectionUrl'] = $(lastsection[i]).find('a').attr('href');
         lastData.push(obj);
     }
 
