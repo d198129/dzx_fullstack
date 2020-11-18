@@ -11,22 +11,23 @@ function partition(arr, left, right) {
             i++;
         }
         arr[j] = arr[i]
-        return i;
     }
-    var findKthLargest = function(nums, k) {
-        let left = 0;
-        right = nums.length - 1;
-        let target = nums.length - k;
-        let i = partition(nums,
-            let, right);
-        while (i !== target) {
-            if (i < target) {
-                left = i + 1
-            } else {
-                right = i - 1
-            }
-            i = partition(nums, left, right);
+    arr[i] = privt;
+    return i;
+}
+var findKthLargest = function(nums, k) {
+    let left = 0;
+    right = nums.length - 1;
+    let target = nums.length - k;
+    let i = partition(nums,
+        let, right);
+    while (i !== target) {
+        if (i < target) {
+            left = i + 1
+        } else {
+            right = i - 1
         }
-        return nums[i];
+        i = partition(nums, left, right);
     }
+    return nums[i];
 }
