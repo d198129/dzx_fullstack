@@ -16,7 +16,7 @@ exports.main = async(event, context) => {
     const $ = cheerio.load(data);
     const bookDetail = $('.book_info');
     let bookDetailData = {} //本书详情
-    bookDetailData['name'] = $(bookDetail).find('.cover').find('.img').attr('alt');
+    bookDetailData['name'] = $(bookDetail).find('.cover').find('img').attr('alt');
     bookDetailData['imgurl'] = $(bookDetail).find('.cover').find('img').attr('src');
     bookDetailData['autho'] = $(bookDetail).find('.book_box').find('.dd_box').eq(0).find('span').eq(0).text();
     bookDetailData['status'] = $(bookDetail).find('.book_box').find('.dd_box').eq(1).find('span').eq(0).text(); //状态

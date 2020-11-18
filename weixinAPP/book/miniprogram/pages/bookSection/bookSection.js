@@ -40,6 +40,8 @@ Page({
                 page: (result.next.split('/')[2]) - 1
             })
             console.log(this.data.lastData);
+        }).catch(err => {
+            console.log(err);
         })
     },
     //上一页
