@@ -96,17 +96,18 @@ Page({
     navtoUrl(e) {
         console.log(e);
         let url = e.currentTarget.dataset.url;
+        console.log(this.data.bookDetailData.name);
         //已经保存在书架的书，记录阅读状态
         if (url) {
             db.collection('book').where({
                 userId: app.globalData.openid,
-                bookName: this.bookDetailData.name
+                bookName: this.data.bookDetailData.name
             }).get().then(res => {
                 let data = res.data || []
                 if (data.length > 0) {
-                    if (data[0].bookUrl != url) {
-                        const id = data[0]._id || [];
-                        db.collection('book').doc(id).updata({
+                    if (data[0].bookUrl !== url) {
+                        const id = data[0]._id || '';
+                        db.collection('book').doc(id).update({
                             data: {
                                 bookUrl: url
                             }
@@ -117,8 +118,9 @@ Page({
                 }
             })
         }
+
         wx.navigateTo({
-            url: `../bookContent/bookContent?${url}&name=${this.data.bookDetailData.name}&imgUrl=${this.data.bookDetailData.imgurl}`
+            url: `../bookContent/bookContent?url=${url}&name=${this.data.bookDetailData.name}&imgUrl=${this.data.bookDetailData.imgurl}`
         })
     },
     //下一页
