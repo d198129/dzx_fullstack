@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background: #307ac6;
+            color: #fff;
+            text-align: center;
+            margin: 20px auto;
+        }
+        
+        input {
+            margin-top: 5vh;
+            width: 200px;
+            height: 40px;
+            border: 1px solid #fff;
+            border-style: 10px;
+            color: #000000;
+            padding-left: 10px;
+        }
+        
+        button {
+            border-radius: 4px;
+            border: none;
+            width: 80px;
+            height: 42px;
+            color: #000000;
+        }
+        
+        #infos {
+            width: 400px;
+            height: 500px;
+            overflow: hidden;
+            border: none;
+            background-color: #fff;
+            color: #000000;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Welcom to lvmeng</h1>
+    <div id="infos"></div>
+    <input type="text" placeholder="请输入你想说的话" id="send_info" value="">
+    <button type="button" id="btn">发送</button>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io();
+        document.getElementById('btn').onclick = function() {
+                socket.emit('link_to_server', document.getElementById('send_info').value);
+            }
+            //接收响应
+        socket.on('link_to_client', (msg) => {
+            document.getElementById('infos').append(msg);
+            // alert(msg);
+        })
+    </script>
+</body>
+
+</html>
