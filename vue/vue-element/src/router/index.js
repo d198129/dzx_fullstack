@@ -4,6 +4,7 @@ import Home from "../views/Home";
 import About from "../views/About";
 import home1 from "../views/home1.vue";
 import home2 from "../views/home2.vue";
+import Detail from "@/views/Detail";
 
 Vue.use(Router);
 export default new Router({
@@ -29,6 +30,18 @@ export default new Router({
             path: "/about",
             name: "About",
             component: About,
+            beforeEnter: (to, from, next) => {
+                console.log(to);
+                console.log(from);
+                next();
+            },
+        },
+        {
+            path: "/detail:username",
+            name: "Detail",
+            component: Detail,
+            // redirect: "/login",
+            // alias: "/hello",
         },
     ],
 });
