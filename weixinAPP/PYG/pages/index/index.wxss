@@ -28,10 +28,10 @@
 .index_floor .foor_group .floor_list navigator {
   float: left;
   width: 33.33%;
-  border-left: 10rpx solid #fff;
 }
 .index_floor .foor_group .floor_list navigator:nth-last-child(-n+4) {
   height: 27.72711207vw;
+  border-left: 10rpx solid #fff;
 }
 .index_floor .foor_group .floor_list navigator:nth-child(2),
 .index_floor .foor_group .floor_list navigator:nth-child(3) {
