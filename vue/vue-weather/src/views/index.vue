@@ -17,11 +17,34 @@
         <span>空气湿度:{{ info.humidity }}%</span>
       </div>
     </div>
-    <div class="future">
+    <div class="future" v-if="futureMapData.length > 0">
       <div class="group">
         明天:
-        <span class="tm">白天</span>
-        <span class="tm">夜间</span>
+        <span class="tm"
+          >白天: {{ futureMapData[0].dayTemp }}
+          {{ futureMapData[0].dayWeather }} {{ futureMapData[0].dayWindDir }}
+          {{ futureMapData[0].dayWindPower }}</span
+        >
+        <span class="tm"
+          >夜间: {{ futureMapData[0].nightTemp }}
+          {{ futureMapData[0].nightWeather }}
+          {{ futureMapData[0].nightWindDir }}
+          {{ futureMapData[0].nightWindPower }}</span
+        >
+      </div>
+      <div class="group">
+        后天:
+        <span class="tm"
+          >白天: {{ futureMapData[1].dayTemp }}
+          {{ futureMapData[1].dayWeather }} {{ futureMapData[1].dayWindDir }}
+          {{ futureMapData[1].dayWindPower }}</span
+        >
+        <span class="tm"
+          >夜间: {{ futureMapData[1].nightTemp }}
+          {{ futureMapData[1].nightWeather }}
+          {{ futureMapData[1].nightWindDir }}
+          {{ futureMapData[1].nightWindPower }}</span
+        >
       </div>
     </div>
     <div class="echart-container" ref="echartContainer"></div>
@@ -34,19 +57,20 @@ export default {
     return {
       localTime: "",
       info: {},
+      futureMapData: [],
+      seriesData: [],
     };
   },
   created() {
     setInterval(() => {
       this.localTime = this.getLocalTime();
     }, 1000);
+  },
+  mounted() {
     this.initMap();
     setInterval(() => {
       this.initMap();
     }, 600000);
-  },
-  mounted(){
-    this.initEchart();
   },
   methods: {
     getLocalTime() {
@@ -63,7 +87,14 @@ export default {
             // console.log(result);
             self.getCurrentCityData(result.city).then((res) => {
               // let a = [...res];
+              console.log(res);
               self.info = res[0];
+              let a = res[1];
+              self.futureMapData = a.forecasts;
+              self.futureMapData.map((item) => {
+                self.seriesData.push(item.dayTemp);
+              });
+              self.initEchart();
             });
           }
         });
@@ -85,35 +116,55 @@ export default {
           weather.getForecast(city, function (err, data) {
             // console.log(err, data);
             res.push(data);
-            resolve(res)
+            resolve(res);
           });
         });
       });
     },
     initEchart() {
+      let a = this.seriesData;
+      console.log(a);
+      let b = [...a];
+      console.log(b);
       let dom = this.$refs.echartContainer;
       var myChart = echarts.init(dom);
-      let app = {},options=null;
+      let app = {},
+        options = null;
       options = {
-          title: {
-            text: "ECharts 入门示例",
-          },
-          tooltip: {},
-          legend: {
-            data: ["销量"],
-          },
-          xAxis: {
-            data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"],
-          },
-          yAxis: {},
-          series: [
-            {
-              name: "销量",
-              type: "bar",
-              data: [5, 20, 36, 10, 10, 20],
+        xAxis: {
+          type: "category",
+          data: ["今天", "明天", "后天", "三天后"],
+          axisLine: {
+            lineStyle: {
+              color: "#fff",
             },
-          ],
-        };
+          },
+          axisTick: {
+            show: false,
+          },
+        },
+        yAxis: {
+          show: false,
+          type: "value",
+        },
+        tooltip: {
+          trigger: "axis",
+          formatter: function (params) {
+            var relVal = params[0].name;
+            for (var i = 0, l = params.length; i < l; i++) {
+              relVal += params[i].value + "°C";
+            }
+            return relVal;
+          },
+        },
+        series: [
+          {
+            data: this.seriesData,
+            type: "line",
+          },
+        ],
+      };
+
       myChart.setOption(options);
     },
   },
@@ -154,6 +205,11 @@ export default {
       background-color: rgba(255, 255, 255, 0.3);
       color: rgba(16, 16, 16, 1);
       font-size: 16px;
+      margin-bottom: 10px;
+      padding: 0 6px;
+      .tm {
+        color: #fff;
+      }
     }
   }
   .echart-container {
