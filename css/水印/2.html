@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="wrap">
+    66
+    <p>123</p>
+    <!-- 456 -->
+  </div>
+  <script>
+    // const div = document.createElement('div');
+    // const observer = new MutationObserver(()=>{
+    //   console.log(0);
+    // })
+    // observer.observe(document.body,{
+    //   childList:true
+    // })
+    // // document.body.appendChild(div);
+    // console.log(2);
+    const wrap = document.getElementById('wrap');
+    console.log(
+      wrap.childNodes
+    );
+
+    //toString String
+    // 装箱 '2' -> new String('2')   1 -> new Number('1')
+    // 拆箱 let str = new String('2')
+    let str = new String('aaa');
+    console.log(String(str),str);
+    arr = [1,2,3,4];
+    console.log(Object.prototype.toString.call(arr));
+
+    //app.childNodes
+    function findH(parent){
+      console.log(parent);
+      if(parent.childNodes){
+        for(let child of parent.childNodes){
+          findH(child);
+        }
+      }
+    }
+  </script>
+</body>
+</html>
