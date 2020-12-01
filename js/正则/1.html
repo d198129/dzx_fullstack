@@ -1,0 +1,29 @@
+<script>
+  //量词
+  var reg = /ab{2,5}/;//abb abbb abbbb abbbbb
+  var reg1 = /ab|ba/;//ab 或者ba
+  var reg2 = /a[123]b/;//a1b a2b a3b
+  var reg3 = /[5-9]/
+  var reg4 = /[5-9a-z]/;
+  reg.test('bbbbaaa');
+  let colorReg = /^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})/
+  let colorReg2 = /#[0-9a-fA-F]{3}|#[0-9a-fA-F]{6}/
+  console.log(colorReg.test('123#666'));
+  console.log(colorReg.exec('#eeefff'))
+
+  let timeReg = /(^[01][0-9])|(^2[0-3]):[0-5][0-9]/
+  console.log(timeReg.test('23:59'));
+  
+  let dateReg = /^[0-9]([0-9]{3,})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])/;
+  console.log(dateReg.test('2020-13-29'));
+
+  let reg5 = /a/g;
+  //家里/g才会有lastIndex这个属性
+  let str = 'aaa';
+  console.log(reg5.test(str));true
+  console.log(reg5.test(str));true
+  console.log(reg5.test(str));true
+  console.log(res5.lastIndex);//3
+  console.log(reg5.test(str));false// 从3开始往后匹配
+  //3 后面没内容 false
+</script>
