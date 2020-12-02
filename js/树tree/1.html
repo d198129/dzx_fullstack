@@ -1,0 +1,57 @@
+<script>
+  let root = {
+    val: 1,
+    left: {
+      val: 2,
+      left: { val: 4 },
+      right: { val: 5 },
+    },
+    right: {
+      val: 3,
+      left: { val: 6 },
+      right: { val: 7 },
+    }
+  }
+  //树的核心 70%
+  //前序 root left right
+  //中序 left root right
+  //后序 left right root
+  function preOrder(root) {
+    if (!root) return;
+    console.log(root.val);
+    preOrder(root.left);
+    preOrder(root.right);
+  }
+  //前序遍历二叉树
+  function walk(root) {
+    let arr = [];
+    function preOrder(root) {
+      if (!root) return;
+      arr.push(root.val);
+      preOrder(root.left);
+      preOrder(root.right);
+    }
+    preOrder(root);
+    return arr;
+  }
+
+  // 翻转二叉树
+  function revers (root) {
+    if(!root) return root;
+    [root.left, root.right] = [root.right, root.left];
+    revers(root.left);
+    revers(root.right);
+    return root
+  }
+
+  //深度优先遍历: 前序 中序 后序 DFS
+  //广度优先遍历: 层序 BFS
+
+  // 二叉树最大深度
+  function maxDepth (root) {
+    if(!root) return 0;
+    let lh = maxDepth(root.left);
+    let rh = maxDepth(root.right);
+    return Math.max(lh,rh) + 1;
+  }
+</script>
