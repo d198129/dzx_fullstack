@@ -1,4 +1,5 @@
 //引入 用来发送请求的 方法
+import regeneratorRuntime from '../../lib/runtime/runtime';
 import { request } from "../../request/index";
 //index.js
 //Page Object
@@ -29,28 +30,28 @@ Page({
     },
     //获取轮播图
     getSwiperList() {
-        request({ url: 'https://api-hmugo-web.itheima.net/api/public/v1/home/swiperdata' })
+        request({ url: '/home/swiperdata' })
             .then(result => {
                 this.setData({
-                    swiperList: result.data.message
+                    swiperList: result
                 })
             })
     },
     //获取 分类导航数据
     getCatesList() {
-        request({ url: 'https://api-hmugo-web.itheima.net/api/public/v1/home/catitems' })
+        request({ url: '/home/catitems' })
             .then(result => {
                 this.setData({
-                    catesList: result.data.message
+                    catesList: result
                 })
             })
     },
     //获取楼层数据
     getfloorList() {
-        request({ url: 'https://api-hmugo-web.itheima.net/api/public/v1/home/floordata' })
+        request({ url: '/home/floordata' })
             .then(result => {
                 this.setData({
-                    floorList: result.data.message
+                    floorList: result
                 })
             })
     },
