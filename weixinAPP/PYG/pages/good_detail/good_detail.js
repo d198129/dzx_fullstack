@@ -39,6 +39,25 @@ Page({
       urls
     }); 
   },
+  //点击加入购物车
+  handleCartAdd(e) {
+    let cart = wx.getStorageSync('cart')||[];
+    let index = cart.findIndex(v => v.goods_id === this.GoodsInfo.goods_id)
+    if (index === -1) {
+      //不存在 第一次添加
+      this.GoodsInfo.num = 1;
+      cart.push(this.GoodsInfo.num);
+    } else {
+      cart[index].num++;
+    }
+    wx.setStorageSync("cart", cart);
+    wx.showToast({
+      title: '加入成功',
+      icon: 'success',
+      mask: true
+    });
+      
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

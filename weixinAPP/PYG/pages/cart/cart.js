@@ -1,4 +1,10 @@
 // pages/cart/cart.js
+import regeneratorRuntime from '../../lib/runtime/runtime';
+import {
+  getSetting,
+  chooseAddress,
+  openSetting
+} from "../../utils/asyncWx";
 Page({
 
   /**
@@ -11,8 +17,24 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
+  async handleChooseAddress() {
+    // 获取收货地址
+    try {
+      const res1 = await getSetting();
+      console.log(res1);
+      const scopeAddress = res1.authSetting["scope.address"];
+      console.log(res1.authSetting["scope.address"]);
+      if (scopeAddress === true) {
+        await openSetting();
+      }
+      const res2 = await chooseAddress();
+      console.log(res2);
+    } catch (error) {
+      console.log(error);
+    }
+  },
   onLoad: function (options) {
-
+    
   },
 
   /**
