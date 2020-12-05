@@ -1,44 +1,51 @@
 <template>
-  <div class="goods">
-    <div class="menu-wrapper" ref="menuWrapper">
-      <ul>
-        <li class="menu-item" 
-        @click="selectMenu(index)" 
-        v-for="(item,index) in goods" 
-        :key="item.name" :class="{'current':currentIndex===index}">
-          <span class="text">
-            <SupportIco v-if="item.type>0" :size=3 :type="item.type"></SupportIco>
-            {{item.name}}
-          </span>
-        </li>
-      </ul>
-    </div>
-    <div class="foods-wrapper" ref="foodsWrapper">
-      <ul>
-        <li class="food-list" v-for="(item,index) in goods" :key="index" ref="foodList">
-          <h1 class="title">{{item.name}}</h1>
-          <ul>
-            <li class="food-item" v-for="(food,idx) in item.foods" :key="idx">
-              <div class="icon">
-                <img :src="food.icon" alt="">
-              </div>
-              <div class="content">
-                <h2 class="name">{{food.name}}</h2>
-                <p class="desc">{{food.description}}</p>
-                <div class="extra">
-                  <span class="count">月售{{food.sellCount}}份</span>
-                  <span>好评率{{food.rating}}%</span>
+  <div>
+    <div class="goods">
+      <div class="menu-wrapper" ref="menuWrapper">
+        <ul>
+          <li class="menu-item" 
+          @click="selectMenu(index)" 
+          v-for="(item,index) in goods" 
+          :key="item.name" :class="{'current':currentIndex===index}">
+            <span class="text">
+              <SupportIco v-if="item.type>0" :size=3 :type="item.type"></SupportIco>
+              {{item.name}}
+            </span>
+          </li>
+        </ul>
+      </div>
+      <div class="foods-wrapper" ref="foodsWrapper">
+        <ul>
+          <li class="food-list" v-for="(item,index) in goods" :key="index" ref="foodList">
+            <h1 class="title">{{item.name}}</h1>
+            <ul>
+              <li class="food-item" v-for="(food,idx) in item.foods" :key="idx">
+                <div class="icon">
+                  <img :src="food.icon" alt="">
                 </div>
-                <div class="price">
-                  <span class="now">￥{{food.price}}</span>
-                  <span class="old" v-if="food.oldPrice">￥{{food.oldPrice}}</span>
+                <div class="content">
+                  <h2 class="name">{{food.name}}</h2>
+                  <p class="desc">{{food.description}}</p>
+                  <div class="extra">
+                    <span class="count">月售{{food.sellCount}}份</span>
+                    <span>好评率{{food.rating}}%</span>
+                  </div>
+                  <div class="price">
+                    <span class="now">￥{{food.price}}</span>
+                    <span class="old" v-if="food.oldPrice">￥{{food.oldPrice}}</span>
+                  </div>
+                  <!-- + -->
+                  <div class="cartcontrol-wrapper">
+                    <CartControl :food="food"></CartControl>
+                  </div>
                 </div>
-              </div>
-            </li>
-          </ul>
-        </li>
-      </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
     </div>
+    <ShopCart :selectFoods="selectFoods" :deliveryPrice="seller.deliveryPrice" :minPrice="seller.minPrice"></ShopCart>
   </div>
 </template>
 
@@ -46,7 +53,14 @@
 import BScroll from 'better-scroll';
 import { getGoods } from "@/api";
 import SupportIco from "@/components/support-ico/Support-ico";
+import ShopCart from "@/components/shop-cart/Shop-cart";
+import CartControl from "@/components/cart-control/Cart-control";
 export default {
+  props:{
+    seller:{
+      type:Object
+    }
+  },
   data(){
     return {
       goods:[],
@@ -66,7 +80,9 @@ export default {
     })
   },
   components:{
-    SupportIco
+    SupportIco,
+    ShopCart,
+    CartControl
   },
   computed:{
     currentIndex(){
@@ -78,7 +94,20 @@ export default {
         }
       }
       return 0
-    }
+    },
+    selectFoods(){
+      let foods = [];
+      for(let good of this.goods){
+        if(good.foods){
+          for(let food of good.foods){
+            if(food.count){
+              foods.push(food)
+            }
+          }
+        }
+      }
+      return foods;
+    },
   },
   methods:{
     selectMenu(i){
@@ -96,7 +125,7 @@ export default {
         probeType:3
       });
       this.foodsScroll.on('scroll',pos=>{
-        console.log(pos);
+        // console.log(pos);
         this.scrollY = Math.abs(Math.round(pos.y));
       })
     },
@@ -109,7 +138,7 @@ export default {
         height += item.clientHeight;
         this.listHeight.push(height);
       }
-      console.log(this.listHeight);
+      // console.log(this.listHeight);
     }
   }
 }
@@ -151,6 +180,7 @@ export default {
       background $color-background-ssss
     .food-item
       display flex
+      position relative
       margin 18px
       padding-bottom 18px
       &:last-child
@@ -189,4 +219,8 @@ export default {
             text-decoration line-through
             font-size 10px
             color rgb(147, 153, 159)
+        .cartcontrol-wrapper
+          position absolute
+          right 0
+          bottom 12px
 </style>
