@@ -1,30 +1,59 @@
 <template>
   <div>
     <div class="shop-cart">
-      <div class="content">
+      <div class="content" @click="toggleList">
         <div class="content-left">
           <div class="logo-wrapper">
-            <div class="logo" :class="{'highlight':totalCount>0}">
-              <i class="icon-shopping_cart" :class="{'highlight':totalCount>0}"></i>
+            <div class="logo" :class="{'highlight': totalCount > 0}">
+              <i class="icon-shopping_cart" :class="{'highlight': totalCount > 0}"></i>
             </div>
-            <div class="num" v-show="totalCount>0">{{totalCount}}</div>
+            <div class="num" v-show="totalCount > 0">{{totalCount}}</div>
           </div>
-          <div class="price" :class="{'highlight':totalCount>0}">￥{{totalPrice}}</div>
-          <div class="desc">另需配送费{{deliveryPrice}}￥</div>
+          <div class="price" :class="{'highlight': totalCount > 0}">¥{{totalPrice}}</div>
+          <div class="desc">另需配送费¥{{deliveryPrice}}元</div>
         </div>
         <div class="content-right">
           <div class="pay" :class="payClass">
-            {{paydesc}}
+            {{payDesc}}
           </div>
         </div>
       </div>
+      <!-- 列表 -->
+      <transition name="fold">
+        <div class="shopcart-list" v-show="listShow">
+          <div class="list-header">
+            <h1 class="title">购物车</h1>
+            <span class="empty" @click="empty">清空</span>
+          </div>
+          <div class="list-content" ref="listContent">
+            <ul>
+              <li class="food" v-for="(item,index) in selectFoods" :key="index">
+                <span class="name">{{item.name}}</span>
+                <div class="price">
+                  <span>¥{{item.price * item.count}}</span>
+                </div>
+                <div class="cartcontrol-wrapper">
+                    <CartControl :food="item"></CartControl>
+                  </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </transition>
     </div>
   </div>
 </template>
 
 <script>
+import BScroll from 'better-scroll';
+import CartControl from '@/components/cart-control/Cart-control'
 export default {
-  props:{
+  data(){
+    return {
+      fold:false
+    }
+  },
+  props: {
     selectFoods: {
       type: Array,
       default () {
@@ -33,61 +62,95 @@ export default {
     },
     deliveryPrice: {
       type: Number,
-      default:0
+      default: 0
     },
-    minPrice:{
+    minPrice: {
       type: Number,
-      default:0
+      default: 0
+    },
+    seller:{
+      type:Object
     }
   },
+  components: {
+    CartControl
+  },
   computed: {
-    totalCount () {
-      let count = 0;
-      Array.from(this.selectFoods).forEach((food)=>{
-        count += food.count;
+    totalCount() {
+      let count = 0
+      Array.from(this.selectFoods).forEach((food) => {
+        count += food.count
       })
-      return count;
+      return count
     },
-    totalPrice () {
-      let totalPrice = 0;
-      Array.from(this.selectFoods).forEach((food)=>{
-        totalPrice += food.count * food.price;
+    totalPrice() {
+      let price = 0
+      Array.from(this.selectFoods).forEach((food) => {
+        price += food.count * food.price
       })
-      return totalPrice;
+      return price
     },
-    paydesc(){
-      if(this.totalPrice === 0){
+    payDesc() {
+      if (this.totalPrice === 0) {
         return `${this.minPrice}元起送`
-      }else if (this.totalPrice < this.minPrice){
+      } else if (this.totalPrice < this.minPrice) {
         let diff = this.minPrice - this.totalPrice
         return `还差${diff}元起送`
-      }else{
-        return `去结算`
+      } else {
+        return '去结算'
       }
-      // let pri;
-      // pri = this.minPrice - this.totalPrice;
-      // return pri;
     },
     payClass() {
-      if(this.totalPrice < this.minPrice){
-        return `not-enough`
-      }else{
-        return `enough`
+      if (this.totalPrice <= this.minPrice) {
+        return 'not-enough'
+      } else {
+        return 'enough'
       }
+    },
+    listShow(){
+      if(!this.totalCount){
+        this.fold = true
+        return false
+      }
+      let show = !this.fold
+      if(show){
+        this.$nextTick(()=>{
+            if(!this.scroll){
+                this.scroll = new BScroll(this.$refs.listContent,{
+                click:true
+              })
+            }else{
+              this.scroll.refresh();
+            }
+        })
+      }
+      return show;
+    }
+  },
+  methods: {
+    toggleList() {
+      if(this.selectFoods.length === 0) return;
+        this.fold = !this.fold;
+    },
+    empty() {
+      this.fold = false;
+      this.selectFoods.forEach((food)=>{
+        food.count = 0;
+      })
     }
   }
 }
 </script>
 
 <style lang="stylus" scoped>
-@import '../../common/stylus/variable.styl'
+@import '../../common/stylus/variable.styl';
 .shop-cart
-  position: fixed;
+  position fixed
   left 0
   bottom 0
   z-index 50
   width 100%
-  height 48px
+  height: 48px;
   .content
     display flex
     background $color-background
@@ -98,7 +161,7 @@ export default {
         vertical-align middle
         display inline-block
         position relative
-        top -10px
+        top: -10px;
         margin 0 12px
         padding 6px
         width 56px
@@ -121,45 +184,94 @@ export default {
             &.highlight
               color $color-white
         .num
-          position: absolute;
+          position absolute
           top 0
           right 0
-          width 24px
-          height 16px
-          line-height 16px
-          text-align center
-          border-radius 50%
+          width: 24px;
+          height: 16px;
+          line-height: 16px;
+          text-align: center;
+          border-radius: 16px;
           font-size $fontsize-small-s
           font-weight bold
           color $color-white
           background $color-red
       .price
-        vertical-align middle
         display inline-block
-        line-height 24px
-        padding-right 12px
-        border-right 1px solid rgba(255,255,255,.1)
+        line-height 48px
+        padding-right: 12px;
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
         font-size $fontsize-large
         font-weight 700
         &.highlight
           color $color-white
       .desc
-        vertical-align middle
         display inline-block
-        line-height 24px
+        line-height: 48px;
         font-size $fontsize-small-s
-    &-right
+    .content-right
       flex 0 0 105px
-      width 105px
+      width: 105px;
       .pay
-        height 48px
-        line-height 48px
-        text-align center
-        font-size $fontsize-small
+        height: 48px;
+        line-height: 48px;
+        text-align: center;
+        font-size: $fontsize-small;
         font-weight 700
         &.not-enough
           background #2b333b
         &.enough
           background $color-green
           color $color-white
+  .shopcart-list
+    z-index -1
+    position absolute
+    left: 0;
+    top: 0;
+    width: 100%;
+    transform translate3d(0, -100%, 0)
+    &.fold-enter-active, &.fold-leave-active
+      transition all 0.5s
+    &.fold-enter, &.fold-leave-to
+      transform translate3d(0, 0, 0)
+    .list-header
+      display flex
+      justify-content space-between
+      padding: 0 18px;
+      height: 40px;
+      line-height: 40px;
+      align-items center
+      border-bottom: 1px solid $color-background-sss;
+      background $color-background-ssss
+      .title
+        font-size $fontsize-medium
+        color $color-background
+      .empty
+        font-size $fontsize-small
+        color $color-blue
+    .list-content
+      padding 0 18px
+      max-height 217px
+      overflow hidden
+      background #fff
+      .food
+        position relative
+        padding 12px 0
+        box-sizing border-box
+        .name
+          line-height 24px
+          font-size 14px
+          color rgb(7, 17, 27)
+        .price
+          position absolute
+          right 90px
+          bottom 12px
+          line-height 24px
+          font-size 14px
+          font-weight 700
+          color rgb(240, 20, 20)
+        .cartcontrol-wrapper
+          position absolute
+          right 0
+          bottom 6px
 </style>
