@@ -45,3 +45,32 @@ export const showModal = ({content}) => {
     })
   })
 }
+
+export const showToast = ({title}) => {
+  return new Promise((resolve, reject) => {
+    wx.showToast({
+      title: title,
+      icon: 'success',
+      success: (res)=>{
+        resolve(res);
+      },
+      fail: (err) => {
+        reject(err)
+      }
+    })
+  })
+}
+
+export const login = () => {
+  return new Promise((resolve, reject) => {
+    wx.login({
+      timeout: 10000,
+      success: (result) => {
+        resolve(result)
+      },
+      fail: (err) => {
+        reject(err);
+      }
+    });
+  })
+}

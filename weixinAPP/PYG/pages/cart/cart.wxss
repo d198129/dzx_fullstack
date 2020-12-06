@@ -28,6 +28,8 @@ page {
 }
 .cart_content .cart_main .cart_item {
   display: flex;
+  padding: 10rpx;
+  border-bottom: 1rpx solid #ccc;
 }
 .cart_content .cart_main .cart_item .cart_chk_wrap {
   flex: 1;

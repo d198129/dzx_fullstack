@@ -1,4 +1,7 @@
 // pages/auth/auth.js
+import regeneratorRuntime from '../../lib/runtime/runtime';
+import { request } from "../../request/index";
+import { login } from "../../utils/asyncWx";
 Page({
 
   /**
@@ -7,7 +10,27 @@ Page({
   data: {
 
   },
-
+  //获取用户信息
+  async handlegetUserInfo(e) {
+    try {
+    // console.log(e);
+    //获取用户信息
+    // encryptedData rawData iv signature code
+    const { ncryptedData, rawData, iv, signature } = e.detail;
+    //获取小程序登录成功后的code
+    const { code } = await login();
+    const loginParams = {ncryptedData, rawData, iv, signature,code}
+    //发送请求
+    const { token } = await request({ url: "/users/wxlogin", data: loginParams, method: "post" });
+    //把token存入本地，并且跳回上一个页面
+    wx.setStorageSync("token", token);
+    wx.navigateBack({
+      delta: 1
+    });
+    } catch (error) {
+      console.log(error);
+    }
+  },
   /**
    * 生命周期函数--监听页面加载
    */
