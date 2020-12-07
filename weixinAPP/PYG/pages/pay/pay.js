@@ -1,12 +1,7 @@
 // pages/pay/pay.js
 import regeneratorRuntime from '../../lib/runtime/runtime';
-import {
-  getSetting,
-  chooseAddress,
-  openSetting,
-  showModal,
-  showToast
-} from "../../utils/asyncWx";
+import { requestPayment, showToast } from "../../utils/asyncWx";
+import { request } from '../../request/index'
 Page({
 
   /**
@@ -63,15 +58,47 @@ Page({
       totalNum
     });
   },
-  handleOrederPay() {
-    const token = wx.getStorageSync("token");
-    if (!token) {
+  async handleOrederPay() {
+    try {
+      const token = wx.getStorageSync("token");
+      if (!token) {
+        wx.navigateTo({
+          url: '/pages/auth/auth',
+        });
+        return;
+      }
+      console.log("已经存在tken");
+      const header = { Authorization: token };
+      //准备 请求体参数
+      const order_price = this.data.totalPrice;
+      const consignee_addr = this.data.address.all;
+      const cart = this.data.cart;
+      let goods = [];
+      cart.forEach(v => goods.push({
+        goods_id: v.goods_id,
+        goods_number: v.num,
+        goods_price: v.goods_price
+      }));
+      const orderParams ={ order_price,consignee_addr,goods }
+      const { order_number } = await request({ url: "/my/orders/create", method: "POST", data: orderParams, header: header });
+      const { pay } = await request({ url: "/my/orders/req_unifiedorder", method: "POST", data: { order_number }, header: header });
+      const res = await requestPayment(pay);
+      // console.log(res);
+      //查询后台
+      const res1 = await request({ url: "/my/orders/chkOrder", method: "POST", data: { order_number }, header: header });
+      await showToast({ title: "支付成功" });
+      // 手动删除缓存中 已经支付了的商品
+      let newCart = wx.getStorageSync("cart");
+      newCart = newCart.filter(v => !v.checked);
+      wx.getStorageSync("cart",newCart);
       wx.navigateTo({
-        url: '/pages/auth/auth',
+        url: '/pages/order/order',
       });
-      return;
+        
+    } catch (error) {
+      await showToast({ title: "支付失败" });
+      console.log(error);
     }
-    console.log("已经存在tken");
   },
 
   /**
