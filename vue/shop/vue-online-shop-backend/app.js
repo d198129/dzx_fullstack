@@ -7,6 +7,15 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var apiRouter = require('./routes/api');
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://127.0.0.1:27017/test');
+const db = mongoose.connection;
+db.on('error', function () {
+  console.log("db error");
+})
+db.once('open', function () {
+  console.log('db opened');
+});
 
 var app = express();
 
