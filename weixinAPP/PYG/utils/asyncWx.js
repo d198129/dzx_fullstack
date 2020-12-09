@@ -51,6 +51,7 @@ export const showToast = ({title}) => {
     wx.showToast({
       title: title,
       icon: 'success',
+      mask:true,
       success: (res)=>{
         resolve(res);
       },

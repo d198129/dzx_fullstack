@@ -1,13 +1,15 @@
 // pages/good_detail/good_detail.js
 import regeneratorRuntime from '../../lib/runtime/runtime';
 import { request } from "../../request/index";
+import { showToast } from '../../utils/asyncWx'
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    goodsObj: {}
+    goodsObj: {},
+    isCollect:false
   },
   GoodsInfo: {},
   /**
@@ -17,7 +19,17 @@ Page({
     const { goods_id } = options;
     this.getGoodsDetail(goods_id);
   },
-
+  async handelCollection() {
+    let isCollect = !this.data.isCollect;
+    if (isCollect) {
+      await showToast({ title: "收藏成功" });
+    }else{
+      await showToast({ title: "取消成功" });
+    }
+    this.setData({
+      isCollect:isCollect
+    })
+  },
   async getGoodsDetail(goods_id) {
     const goodsObj = await request({ url: "/goods/detail", data: { goods_id } });
     this.GoodsInfo = goodsObj;
