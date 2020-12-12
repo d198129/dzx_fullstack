@@ -43,6 +43,7 @@ export default {
         return;
       }
       this.showLoginTip('登录中...')
+      this.login();
     }
   }
 }

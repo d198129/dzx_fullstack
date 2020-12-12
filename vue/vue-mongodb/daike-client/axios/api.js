@@ -6,14 +6,14 @@ import router from 'vue-router'
 import { Toast } from 'vant';
 
 export default function $axios(options) {
-  return Promise((resolve,reject) => {
+  return new Promise((resolve,reject) => {
     const instance = axios.create({
       baseURL:config.baseURL,
     });
     //请求拦截
     instance.interceptors.request.use(
       config => {
-        if (config.method.toLocaleUpperCase() === 'POST' || config.method.toLocaleUpperCase() === 'PUT') {
+        if (config.method.toLocaleUpperCase() === 'POST' || config.method.toLocaleUpperCase() === 'PUT' || config.method.toLocaleUpperCase()==='DELETE') {
           config.data = qs.stringify(config.data);
         }
         return config;
