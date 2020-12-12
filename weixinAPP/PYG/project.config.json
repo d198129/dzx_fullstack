@@ -106,6 +106,12 @@
         {
           "name": "登录",
           "pathName": "pages/login/login",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "搜索",
+          "pathName": "pages/search/search",
           "scene": null
         }
       ]
