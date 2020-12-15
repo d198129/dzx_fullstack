@@ -4,7 +4,8 @@ const views = require('koa-views')
 const json = require('koa-json')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
-const logger = require('koa-logger')
+const logger = require('koa-logger')//打印日志
+const cors = require('koa2-cors')
 
 const index = require('./routes/index')
 const users = require('./routes/users')
@@ -23,6 +24,7 @@ app.use(require('koa-static')(__dirname + '/public'))
 app.use(views(__dirname + '/views', {
   extension: 'ejs'
 }))
+app.use(cors())
 
 // logger
 app.use(async (ctx, next) => {
