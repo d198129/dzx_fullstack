@@ -1,55 +1,68 @@
 <template>
   <div class="star-login">
-    <h1>登录</h1>
+    <h1>注册</h1>
     <div class="login-wrapper">
-      <div class="avatar" :style="`background-image:url(${avatar})`"></div>
+      <div class="avatar" :style="`background-image: url(${avatar})`"></div>
+
       <div class="input-group">
-        <label for="usernaem">账号</label>
-        <input type="text" name="" id="username" v-model="username">
+        <label for="nickname">昵称</label>
+        <input type="text" id="nickname" v-model="nickname">
       </div>
+
+      <div class="input-group input-group-panel">
+        <label for="username">账号</label>
+        <input type="text" id="username" v-model="username">
+      </div>
+
       <div class="input-group input-group-panel">
         <label for="userpwd">密码</label>
-        <input type="password" name="" id="userpwd" v-model="userpwd">
+        <input type="password" id="userpwd" v-model="userpwd">
       </div>
-      <p class="forgot-pwd">忘记密码</p>
-      <p class="sign" @click="login">登录</p>
+
+      <div class="sign" @click="register">注册</div>
     </div>
-    <p class="register" @click="register">新用户点击去注册</p>
+    <p class="register" @click="login">已有账号？点击登录</p>
   </div>
 </template>
 
 <script>
 export default {
-  data(){
+  data () {
     return {
-      avatar: require('./../../assets/img/avatar.png'),
+      avatar: require('./../../assets/img/raw_1512446140.jpeg'),
       username: '',
+      nickname:'',
       userpwd: ''
     }
   },
-  methods: {
-    login () {
-      if (this.username.trim() == '' || this.userpwd.trim() == '') {
-        this.$toast('账号或密码不能为空')
+  methods:{
+    //拿到注册信息
+    //发送请求
+    register(){
+      if (this.nickname.trim() == '') {
+        this.$toast('请输入昵称')
+        return;
+      }
+      if (this.username.trim() == '') {
+        this.$toast('请输入账号')
+        return;
+      }
+      if (this.username.trim() == '') {
+        this.$toast('请输入密码')
         return;
       }
       this.$http({
-        method: 'post',
-        url: this.$util.baseUrl + 'users/userLogin',
-        data: {
-          username:this.username.trim(),
-          userpwd: this.userpwd.trim()
-        }
-      }).then(res => {
-        // console.log(res);
-        if(res.data.code === '80000'){
-          sessionStorage.setItem('userInfo',JSON.stringify(res.data.data));
-          this.$router.push('/noteClass');
-        }
-      })
+      method: 'post',
+      url: this.$util.baseUrl + 'users/userRegister',
+      data: {
+        username:this.username.trim(),
+        userpwd: this.userpwd.trim(),
+        nickname:this.nickname.trim()
+      }
+    })
     },
-    register() {
-      this.$router.push('/starRegister');
+    login () {
+      this.$router.push('/starLogin')
     }
   }
 }
@@ -145,6 +158,7 @@ input {
         color: rgba(255, 255, 255, 1);
         font-size: .48rem;
         font-family: Arial;
+        margin-top: 10px;
     }
   }
   .register {
