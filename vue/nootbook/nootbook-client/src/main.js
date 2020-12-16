@@ -6,11 +6,11 @@ import axios from 'axios'
 import util from  './assets/js/util'
 import 'amfe-flexible';
 
-import { Swipe, SwipeItem, Toast } from 'vant';
+import { Swipe, SwipeItem, Toast, Icon } from 'vant';
 import 'vant/lib/index.css';
 
 
-Vue.use(Swipe).use(SwipeItem).use(Toast).use(axios).use(util)
+Vue.use(Swipe).use(SwipeItem).use(Toast).use(Icon).use(axios).use(util)
 Vue.config.productionTip = false
 
 Vue.prototype.$http = axios;

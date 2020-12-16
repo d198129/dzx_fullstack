@@ -20,6 +20,22 @@ const routes = [
     meta: {
       title:'注册'
     }
+  },
+  {
+    path: '/noteClass',
+    name: 'noteClass',
+    component:()=>import ('@/views/noteClass'),
+    meta: {
+      title:'笔记分类'
+    }
+  },
+  {
+    path: '/noteList',
+    name: 'noteList',
+    component:()=>import ('@/views/noteList'),
+    meta: {
+      title:'笔记列表'
+    }
   }
 ]
 

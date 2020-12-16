@@ -29,7 +29,7 @@
 export default {
   data () {
     return {
-      avatar: require('./../../assets/img/raw_1512446140.jpeg'),
+      avatar: require('./../../assets/img/avatar.png'),
       username: '',
       nickname:'',
       userpwd: ''
@@ -58,6 +58,13 @@ export default {
         username:this.username.trim(),
         userpwd: this.userpwd.trim(),
         nickname:this.nickname.trim()
+      }
+    }).then(res => {
+      console.log(res);
+      if(res.data.code == '80000') {
+        this.$router.push('/starLogin');
+      }else{
+        this.$toast(res.data.mess)
       }
     })
     },
