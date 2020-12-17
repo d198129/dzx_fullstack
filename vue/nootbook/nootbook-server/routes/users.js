@@ -1,5 +1,6 @@
 const router = require('koa-router')()
 const userService = require('../controllers/mySqlConfig')
+const fun = require('../controllers/util')
 
 router.prefix('/users')
 
@@ -113,14 +114,81 @@ router.post('/findNoteListByType', async (ctx, next) => {
   await userService.findNoteListByType(_note_type)
     .then(res => {
       // console.log(res);
-      ctx.body = {
-        code: '8000',
-        data: res,
-        mess: '查询成功'
+      if (res.length) {
+        ctx.body = {
+          code: '8000',
+          data: res,
+          mess: '查询成功'
+        }
+      } else {
+        ctx.body = {
+          code: '8004',
+          mess: '没查到数据'
+        }
       }
   })
     .catch(err => {
     console.log('21');
+  })
+})
+
+//查询笔记详情
+router.post('/findNoteDetail', async (ctx, next) => {
+  let _id = ctx.request.body.id;
+  await userService.findDetail(_id)
+    .then(res => {
+    // console.log(res);
+      if (res.length) {
+        ctx.body = {
+          code: '8000',
+          data: res,
+          mess: '查询成功'
+        }
+    }
+    })
+  .catch(err => {
+    console.log('出错了');
+  })
+})
+
+//写笔记
+router.post('/insertNote', async (ctx, next) => {
+  let _id=  Math.floor(Math.random()*7);
+  let userId = ctx.request.body.userId;
+  let title = ctx.request.body.title;
+  let note_type = ctx.request.body.note_type;
+  let note_content = ctx.request.body.note_content;
+  let is_collection = 0;
+  let c_time = fun.newTime();
+  let m_time = fun.newTime();
+  let head_img = ctx.request.body.head_img;
+  let collection_id = null;
+  let nickname = ctx.request.body.nickname;
+  let value = [_id, userId, title, note_type, note_content, is_collection, c_time, m_time, head_img, collection_id, nickname];
+  // console.log(value);
+  await userService.insertNote(value)
+    .then(res => {
+    // console.log(res);
+      console.log('123');
+      let r = '';
+      if (res.affectedRows != 0) {
+        r = 'ok';
+        ctx.body = {
+          code: '80000',
+          data: r,
+          mess: '存储成功'
+        }
+      } else {
+        r = 'error';
+        ctx.body = {
+          code: '80004',
+          data: r,
+          mess: '存储失败'
+        }
+      }
+    })
+  .catch(err => {
+    console.log('出错了');
   })
 })
 

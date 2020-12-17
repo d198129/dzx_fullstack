@@ -55,10 +55,23 @@ let insertUser = function (value) {
   let _sql = `insert into users set username=?,userpwd=?,nickname=?;`
   return allServices.query(_sql,value)
 }
+//查询详情
+let findDetail = function (id) {
+  let _sql = `select * from note where id="${id}";`
+  return allServices.query(_sql);
+}
+
+//写日记
+let insertNote = function (value) {
+  let _sql = `insert into note set id=?,useId=?,title=?,note_type=?,note_content=?,is_collection=?,c_time=?,m_time=?,head_img=?,collection_id=?,nickname=?;`
+  return allServices.query(_sql,value);
+}
 
 module.exports = {
   userLogin,
   findUser,
   insertUser,
-  findNoteListByType
+  findNoteListByType,
+  findDetail,
+  insertNote
 }
