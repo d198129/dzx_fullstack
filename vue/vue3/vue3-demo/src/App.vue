@@ -8,14 +8,26 @@
   <!-- <ul>
     <Fargment :data="[5,3,4,1,8,9,2]"></Fargment>
   </ul> -->
-  <Teleporta></Teleporta>
+  <!-- <Teleporta></Teleporta> -->
+  <Suspense>
+    <template #default>
+      <AsyncComponent :timeout="3000"></AsyncComponent>
+    </template>
+    <template #fallback>
+      <Loading></Loading>
+    </template>
+  </Suspense>
+  <TodoList></TodoList>
 </template>
 
 <script>
 //composition api
 import { reactive, computed, ref,onMounted } from 'vue';
 // import Fargment from '@/components/Fargment'
-import Teleporta from '@/components/Teleport'
+// import Teleporta from '@/components/Teleport'
+import AsyncComponent from '@/components/AsyncComponent'
+import Loading from '@/components/Loading'
+import TodoList from '@/components/TodoList'
 export default {
   setup() { //入口
     // const state = reactive({
@@ -38,7 +50,10 @@ export default {
   },
   components:{
     // Fargment,
-    Teleporta
+    // Teleporta
+    AsyncComponent,
+    Loading,
+    TodoList
   }
 }
 function useCount(count) {
@@ -60,4 +75,14 @@ function useCount(count) {
   color: #2c3e50;
   margin-top: 60px;
 }
+.header.fixed{
+  background: #fff;
+  position: fixed;
+  top:0;
+  left:0;
+  right:0;
+  width:100%;
+  z-index:100;
+}
+
 </style>

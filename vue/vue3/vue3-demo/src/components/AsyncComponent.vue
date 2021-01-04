@@ -3,6 +3,9 @@
 </template>
 
 <script>
+function sleep(timeout) {
+  return new Promise(resolve => setTimeout(resolve,timeout))
+}
 export default {
   name: 'AsyncComponent',
   props: {
@@ -10,6 +13,9 @@ export default {
       type: Number,
       required: true
     }
+  },
+  async setup(props) {
+    await sleep(props.timeout)
   }
 }
 </script>
