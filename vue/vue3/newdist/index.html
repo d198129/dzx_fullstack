@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="./vue.global.js"></script>
+  <title>Document</title>
+</head>
+<body>
+  <div id="container">
+
+  </div>
+  <script>
+    function usePosition () {
+      let position = Vue.reactive({x: 0,y: 0})
+      function update (e){
+        position.x = e.pageX
+        position.y = e.pageY
+      }
+      Vue.onMounted(() => {
+        window.addEventListener('mousemove',update)
+      })
+      return Vue.toRefs(position);
+    }
+    const App = Vue.createApp({
+      setup(){//只会执行一次
+        let state = Vue.reactive({name: 'wn'})
+        let { x, y } = usePosition()
+        // console.log(state);
+        function change () {
+          state.name = '姚总'
+        }
+        return { state, change, x, y }
+      },
+      template: `<div @click="change">{{state.name}}x:{{x}}y:{{y}}</div>`
+    })
+
+    App.mount(container)
+  </script>
+</body>
+</html>
