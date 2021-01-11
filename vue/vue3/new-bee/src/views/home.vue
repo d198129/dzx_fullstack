@@ -1,5 +1,5 @@
 <template>
-  <header class="home-header wrap">
+  <header class="home-header wrap" :class="{'active': headerScroll}">
     <router-link to="/category">
       <i class="iconfont icon-menu"></i>
     </router-link>
@@ -16,17 +16,36 @@
   <navBar></navBar>
   <!-- 轮播 -->
   <swiper :list="swiperList"></swiper>
+   <!-- 分类列表 -->
+   <div class="category-list">
+     <div v-for="item in categoryList" :key="item.categoryId">
+       <img :src="item.imgUrl" alt="">
+       <span>{{item.name}}</span>
+     </div>
+   </div>
+   <!-- 商品列表 -->
+   <!-- 新品上线 -->
+  <goodsList :title="'新品上线'" :goods="newGoodses"></goodsList>
+  <!-- 热门商品 -->
+  <goodsList :title="'热门商品'" :goods="hotGoodses"></goodsList>
+  <!-- 最新推荐 -->
+  <goodsList :style="{paddingBottom: '50px'}" :title="'最新推荐'" :goods="recommendGoodses"></goodsList>
 </template>
 
 <script>
-import { reactive, toRefs } from 'vue'
+import { onMounted, reactive, toRefs, nextTick } from 'vue'
 import navBar from '@/components/NavBar'
 import swiper from '@/components/Swiper'
+import goodsList from '@/components/GoodsList'
+import { getHome } from '../service/home'
+import { Toast } from 'vant'
+
 export default {
   name: 'home',
   components: {
     navBar,
-    swiper
+    swiper,
+    goodsList
   },
   setup() {
     const state = reactive({
@@ -74,8 +93,33 @@ export default {
           categoryId: 100010
         }
       ],
+      headerScroll: false,
+      newGoodses: [],//新品上线
+      hotGoodses: [],//热门商品
+      recommendGoodses: []// 最新推荐
     })
 
+  onMounted(async () => {
+    Toast.loading({
+      message: '加载中。。。',
+      forbidClick: true
+    })
+    const { data } = await getHome();
+    console.log(data);
+    state.swiperList = data.carousels;
+    state.newGoodses = data.newGoodses;
+    state.hotGoodses = data.hotGoodses;
+    state.recommendGoodses = data.recommendGoodses;
+    Toast.clear();
+  })
+    
+    // 滚动页面事件
+    nextTick(() => {
+      window.addEventListener('scroll',() => {
+        let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+        scrollTop > 100 ? state.headerScroll = true : state.headerScroll = false;
+      })
+    })
     return {
       ...toRefs(state)
     }
@@ -167,47 +211,7 @@ export default {
     }
   }
 }
-.good {
-  .good-header {
-    background: #f9f9f9;
-    height: 50px;
-    line-height: 50px;
-    text-align: center;
-    color: @primary;
-    font-size: 16px;
-    font-weight: 500;
-  }
-  .good-box {
-    display: flex;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-    .good-item {
-      box-sizing: border-box;
-      width: 50%;
-      border-bottom: 1PX solid #e9e9e9;
-      padding: 10px 10px;
-      img {
-        display: block;
-        width: 120px;
-        margin: 0 auto;
-      }
-      .good-desc {
-        text-align: center;
-        font-size: 14px;
-        padding: 10px 0;
-        .title {
-          color: #222333;
-        }
-        .price {
-          color: @primary;
-        }
-      }
-      &:nth-child(2n + 1) {
-        border-right: 1PX solid #e9e9e9;
-      }
-    }
-  }
-}
+
 .floor-list {
     width: 100%;
     padding-bottom: 50px;
