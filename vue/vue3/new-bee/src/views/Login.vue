@@ -78,30 +78,64 @@
 import sHeader from '@/components/SimpleHeader'
 import { reactive, ref, toRefs } from 'vue'
 import vueImgVerify from '@/components/vueImgVerify'
+import { Toast } from 'vant'
+import { register, login } from '@/service/user'
+import md5 from 'js-md5'
+import { setLocal } from '@/common/js/utils'
+import { useRouter } from 'vue-router'
 export default {
   components: {
     sHeader,
     vueImgVerify
   },
   setup() {
+    const router = useRouter();
     const verifyRef = ref(null);
     const state = reactive({
       username: '',
       username1: '',
       password: '',
-      password2: '',
+      password1: '',
       verify: '',
-      type: 'login'
+      type: 'login',
+      imgCode: ''
     })
 
-    const toggle = (v) => [
+    const toggle = (v) => {
       state.type = v,
       state.verify = ''
-    ]
+    }
+
+    const onSubmit = async () => {  //value
+      console.log(verifyRef.value.imgCode); // 通过ref.value可以获取到组件中内setup函数返回的值
+      state.imgCode = verifyRef.value.imgCode || '';
+      if(state.verify.toLowerCase() !== state.imgCode.toLowerCase()){
+        Toast.fail('验证码有误')
+        return;
+      }
+      if(state.type == 'login'){ // 登录
+        const { data } = await login({
+          'loginName': state.username,
+          'passwordMd5': md5(state.password)
+        })
+        // token { data } 保存在本地
+        setLocal('token',data);
+        router.push('/home')
+      }else{ // 注册
+        await register({
+          "loginName": state.username1,
+          "password": state.password1
+        })
+        Toast.success('注册成功');
+        state.type = 'login';
+        state.verify = '';
+      }
+    }
     return {
       ...toRefs(state),
       verifyRef,
-      toggle
+      toggle,
+      onSubmit
     }
   }
 }

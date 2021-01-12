@@ -39,6 +39,7 @@ import swiper from '@/components/Swiper'
 import goodsList from '@/components/GoodsList'
 import { getHome } from '../service/home'
 import { Toast } from 'vant'
+import { getLocal } from '@/common/js/utils'
 
 export default {
   name: 'home',
@@ -96,10 +97,15 @@ export default {
       headerScroll: false,
       newGoodses: [],//新品上线
       hotGoodses: [],//热门商品
-      recommendGoodses: []// 最新推荐
+      recommendGoodses: [], // 最新推荐
+      isLogin: false
     })
 
   onMounted(async () => {
+    const token = getLocal('token');
+    if(token){
+      state.isLogin = true;
+    }
     Toast.loading({
       message: '加载中。。。',
       forbidClick: true
