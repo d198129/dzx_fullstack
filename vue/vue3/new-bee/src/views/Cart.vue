@@ -2,7 +2,7 @@
   <div class="cart-box">
     <sHeader :name="'购物车'" :back="false"></sHeader>
     <!-- 列表 -->
-    <div class="cart-body">
+    <div class="cart-body" v-if="list.length > 0">
     <van-checkbox-group v-model="result" @change="groupChange">
       <van-swipe-cell v-for="(item,index) in list" :key="index">
         <div class="good-item">
@@ -26,10 +26,10 @@
     </van-checkbox-group>
     </div>
     <!-- 合计，计算 -->
-    <van-submit-bar v-if="true" class="submit-all" :price="total * 100" button-text="结算" @submit="onSubmit">
+    <van-submit-bar v-if="list.length > 0" class="submit-all" :price="total * 100" button-text="结算" @submit="onSubmit">
       <van-checkbox v-model:checked="checkAll" @click="allCheack">全选</van-checkbox>
     </van-submit-bar>
-    <div class="empty" v-if="false">
+    <div class="empty" v-else>
       <img class="empty-cart" src="//s.yezgea02.com/1604028375097/empty-car.png" alt="空购物车">
       <div class="title">购物车空空如也</div>
       <van-button round color="#1baeae" type="primary" @click="goTo" block>前往选购</van-button>
@@ -44,12 +44,14 @@ import navBar from '@/components/NavBar'
 import { computed, onMounted, reactive, ref, toRefs } from 'vue'
 import { Toast } from 'vant'
 import { getCart, modifyCart, deleteCartItem } from '@/service/cart'
+import { useRouter } from 'vue-router'
 export default {
   components: {
     sHeader,
     navBar
   },
   setup() {
+    const router = useRouter();
     const state = reactive({
       result: [],
       list: [],
@@ -135,13 +137,30 @@ export default {
       }
     }
 
+    // 购物车为空,去首页
+    const goTo = () => {
+      router.push({ path: '/home' })
+    }
+
+    // 结算功能
+    const onSubmit = () => {
+      if(state.result.length == 0){
+        Toast.fail({message: '当前未选中商品噢。。',forbidClick: true});
+        return;
+      }
+      const params = JSON.stringify(state.result);
+      router.push({ path: '/create-order', query: { cartItemId: params } })
+    }
+
     return {
       ...toRefs(state),
       allCheack,
       total,
       groupChange,
       numChange,
-      deleteGood
+      deleteGood,
+      goTo,
+      onSubmit
     }
   }
 }

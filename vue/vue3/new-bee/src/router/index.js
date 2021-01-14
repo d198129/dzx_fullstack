@@ -28,6 +28,16 @@ const routes = [
     path: '/Cart',
     name: 'Cart',
     component: () => import('@/views/Cart')
+  },
+  {
+    path: '/create-order',
+    name: 'create-order',
+    component: () => import('@/views/CreateOrder')
+  },
+  {
+    path: '/address',
+    name: 'address',
+    component: () => import('@/views/Address')
   }
 ]
 
