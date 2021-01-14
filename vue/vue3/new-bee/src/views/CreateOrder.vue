@@ -27,16 +27,39 @@
         </div>
       </div>
     </div>
+    <!-- 生成订单 -->
+    <div class="pay-wrap">
+      <div class="price">
+        <span>商品金额</span>
+        <span>￥ {{total}}</span>
+      </div>
+      <van-button type="primary" class="pay-btn" color="#1baeab" @click="handleCreateOrder">生成订单</van-button>
+    </div>
+    <van-popup
+      closeable
+      :close-on-click-overlay="false"
+      v-model:show="showPay"
+      position="bottom"
+      :style="{ height: '30%' }"
+      @close="close"
+    >
+      <div :style="{ width: '90%', margin: '0 auto', padding: '50px 0' }">
+        <van-button :style="{ marginBottom: '10px' }" color="#1989fa" block @click="handlePayOrder(1)">支付宝支付</van-button>
+        <van-button color="#4fc08d" block @click="handlePayOrder(2)">微信支付</van-button>
+      </div>
+    </van-popup>
   </div>
 </template>
 
 <script>
 import sHeader from '@/components/SimpleHeader'
-import { onMounted, reactive, toRefs } from 'vue'
+import { computed, onMounted, reactive, toRefs } from 'vue'
 import { Toast } from 'vant'
 import { useRoute, useRouter } from 'vue-router'
 import { getByCartItemIds } from '@/service/cart'
 import { getAddressDetail, getDefaultAddressDetail } from '@/service/address'
+import { createOrder, payOrder } from '@/service/order'
+import { setLocal, getLocal } from '@/common/js/utils'
 export default {
   components: {
     sHeader
@@ -46,6 +69,10 @@ export default {
     const router = useRouter();
     const state = reactive({
       cartList: [],
+      cartItemId: [],
+      address: {},
+      showPay: false,
+      orderNo: '' // 订单编号
     })
     onMounted(() => {
       init();
@@ -55,21 +82,64 @@ export default {
       Toast.loading({ message: '加载中。。', forbidClick: true });
       // console.log(route.query);
       const { cartItemId, addressId } = route.query;
-      const _cartItemId = JSON.parse(cartItemId);
+      const _cartItemId = cartItemId ? JSON.parse(cartItemId) : JSON.parse(getLocal('carItemId'));
+      setLocal('carItemId', JSON.stringify(cartItemId))
       // 请求用户地址
       const { data: address } = addressId ? await getAddressDetail(addressId) : getDefaultAddressDetail();
       if(!address || address == null ){
         router.push({ path: '/address' });
         return;
       }
+
+      state.address = address;
       // 请求要购买的商品数据
       const { data: list } = await getByCartItemIds({ cartItemIds: _cartItemId.join('') });
       state.cartList = list;
       Toast.clear();
     }
 
+    const goTo = () => {
+      router.push({ path: '/address', query: { cartItemId: JSON.stringify(state.cartItemId), from: 'create-order' } })
+    }
+
+    // 合计
+    const total = computed(() => {
+      let sum = 0;
+      state.cartList.forEach(item => {
+        sum += item.goodsCount * item.sellingPrice;
+      })
+      return sum;
+    })
+
+    // 生成订单
+    const handleCreateOrder = async () => {
+      const params = {
+        addressId: state.address.addressId,
+        cartItemIds: state.cartList.map(item => item.cartItemId)
+      }
+      // 调用接口
+      const { data } = await createOrder(params)
+      setLocal('cartItemId','')
+      // console.log(data);
+      state.orderNo = data;
+      state.showPay = true;
+    }
+
+    // 支付
+    const handlePayOrder = async(type) => {
+      await payOrder({ orderNo: state.payOrder, payType: type });
+      Toast.success('支付成功');
+      setTimeout(() => {
+        router.push({ path: '/order'});
+      })
+    }
+
     return {
-      ...toRefs(state)
+      ...toRefs(state),
+      goTo,
+      total,
+      handleCreateOrder,
+      handlePayOrder
     }
   }
 }
@@ -111,6 +181,7 @@ export default {
   }
   .good {
     margin-bottom: 120px;
+    padding-bottom: 106px;
   }
   .good-item {
     padding: 10px;
