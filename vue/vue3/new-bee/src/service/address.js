@@ -21,3 +21,8 @@ export function addAddressList(params) {
 export function EditAddressList(params) {
   return axios.put(`/address`,params)
 }
+
+// 删除地址
+export function DeleteAddressList(id) {
+  return axios.delete(`/address/${id}`)
+}
