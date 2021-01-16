@@ -43,6 +43,21 @@ const routes = [
     path: '/address-edit',
     name: 'address-edit',
     component: () => import('@/views/AddressEdit')
+  },
+  {
+    path: '/user',
+    name: 'user',
+    component: () => import('@/views/User')
+  },
+  {
+    path: '/category',
+    name: 'category',
+    component: () => import('@/views/User')
+  },
+  {
+    path: '/order',
+    name: 'order',
+    component: () => import('@/views/Order')
   }
 ]
 
