@@ -38,7 +38,7 @@ export default {
       },
       type: 'add',
       addressInfo: {},
-      addressId
+      addressId: ''
     })
 
     onMounted( async () => {
@@ -67,28 +67,30 @@ export default {
         const { data: addressDetail } = await getAddressDetail(addressId);
         let _areaCode = '';
         const province = tdist.getLev1();
-        Object.entries(state.areaList.county_list).forEach(([id,text]) => {
-          // 先找到对应的区
-          if(text == addressDetail.regionName){
-            // console.log(text);
-            const provinceIndex = province.findIndex(item => item.id.substr(0,2))
-          }
-        })
+        // Object.entries(state.areaList.county_list).forEach(([id,text]) => {
+        //   // 先找到对应的区
+        //   if(text == addressDetail.regionName){
+        //     // console.log(text);
+        //     const provinceIndex = province.findIndex(item => item.id.substr(0,2))
+        //   }
+        // })
 
         // 拿到省级code，利用省级code拿到市级code，利用市级code拿到县级code
-        // const toCode = (area, code) => {
-        //   for(let key in tdist){
-        //     if(tdist[key][0] == area && tdist[key][1] == code){
-        //       return key;
-        //     }
-        //   }
-        // }
-        // let provinceCode = toCode(addressDetail.provinceName, '1')
-        // let cityode = toCode(addressDetail.provinceName, provinceCode)
-        // let regionCode = toCode(addressDetail.provinceName, cityode);
+        const toCode = (area, code) => {
+          for(let key in tdist){
+            if(tdist[key][0] == area && tdist[key][1] == code){
+              return key;
+            }
+          }
+        }
+        let provinceCode = toCode(addressDetail.provinceName, '1')
+        let cityode = toCode(addressDetail.cityName, provinceCode)
+        let regionCode = toCode(addressDetail.regionName, cityode);
         // console.log(provinceCode);
         // console.log(cityode);
         // console.log(regionCode);
+        _areaCode = regionCode;
+        console.log(_areaCode);
 
         state.addressInfo = {
           id: addressDetail.addressId,

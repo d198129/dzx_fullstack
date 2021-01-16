@@ -5,5 +5,5 @@ export function createOrder(params) {
 }
 
 export function payOrder(params) {
-  return axios.get(`/saveOrder`,{ params })
+  return axios.get(`/paySuccess`,{ params })
 }

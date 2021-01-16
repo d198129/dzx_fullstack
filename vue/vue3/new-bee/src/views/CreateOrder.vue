@@ -85,7 +85,9 @@ export default {
       const _cartItemId = cartItemId ? JSON.parse(cartItemId) : JSON.parse(getLocal('carItemId'));
       setLocal('carItemId', JSON.stringify(cartItemId))
       // 请求用户地址
-      const { data: address } = addressId ? await getAddressDetail(addressId) : getDefaultAddressDetail();
+      console.log(addressId);
+      const { data: address } = addressId ? await getAddressDetail(addressId) : await getDefaultAddressDetail();
+      console.log(address);
       if(!address || address == null ){
         router.push({ path: '/address' });
         return;
@@ -127,11 +129,11 @@ export default {
 
     // 支付
     const handlePayOrder = async(type) => {
-      await payOrder({ orderNo: state.payOrder, payType: type });
+      await payOrder({ orderNo: state.orderNo, payType: type });
       Toast.success('支付成功');
       setTimeout(() => {
         router.push({ path: '/order'});
-      })
+      },1000)
     }
 
     return {
