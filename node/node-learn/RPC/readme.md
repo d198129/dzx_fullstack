@@ -22,4 +22,10 @@ Remote Procedure Call (远程过程调用)
   - Ajax：HTTP (html, json)
   - RPC：二进制协议 (更小的数据包体积，更快的编码速率)
 
-# RPC 调用: Buffer
+# RPC 调用: Buffer 编码解码二进制数据包
+  00 00 00 00 0000 0000
+write(x, 0) write(x, 3) write(x,5)
+
+protocol buffer
+
+# RPC 调用网络：net建立多路复用的RPC通道
