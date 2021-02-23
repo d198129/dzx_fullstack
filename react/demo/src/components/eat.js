@@ -1,6 +1,7 @@
 import React, { Component,Fragment } from 'react'
 import EatItem from './eatitem'
 import '../style/eat.css'
+import axios from 'axios'
 
 class Eat extends Component {
   constructor(props) {
@@ -14,6 +15,7 @@ class Eat extends Component {
   inputChange(e) {
     // console.log(e.target.value);
     // this.state.inputValue = e.target.value;
+    // this.input.value
     this.setState({
       inputValue: e.target.value
     })
@@ -34,12 +36,25 @@ class Eat extends Component {
       list: list
     })
   }
+
+  componentDidMount() {
+    axios.post('https://web-api.juejin.im/v3/web/wbbr/bgeda')
+      .then(res => {
+      console.log(res);
+    })
+  }
   render() {
     return (
       <Fragment>
         <div>
           {/* <label for="addGoods">加菜：</label> */}
-          <input id="addGoods" className="input" value={this.state.inputValue} onChange={this.inputChange.bind(this)}></input>
+          <input id="addGoods"
+            className="input"
+            value={this.state.inputValue}
+            ref={(input) => { this.input = input }}
+            onChange={this.inputChange.bind(this)}>
+            
+            </input>
           <button onClick={this.addList.bind(this)}>下单</button>
         </div>
         <ul>
