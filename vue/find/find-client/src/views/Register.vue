@@ -11,10 +11,6 @@
         <label for="userpwd">密码</label>
         <input type="password" name="" id="userpwd" v-model="userpwd">
       </div>
-      <van-radio-group v-model="radio" direction="horizontal">
-        <van-radio name="1" checked-color="#1baeae" icon-size="16px">管理员</van-radio>
-        <van-radio name="2" checked-color="#1baeae" icon-size="16px">用户</van-radio>
-      </van-radio-group>
       <p class="forgot-pwd">忘记密码</p>
       <p class="sign" @click="login">登录</p>
     </div>
@@ -32,8 +28,7 @@ export default {
     return {
       avatar: require('../assets/img/avatar.png'),
       username: '',
-      userpwd: '',
-      radio: '2'
+      userpwd: ''
     }
   },
   methods: {
@@ -56,19 +51,15 @@ export default {
           this.$router.push('/noteClass');
         }
       })
-      // console.log(this.radio);
     },
     register() {
       this.$router.push('/Register');
-    },
+    }
   }
 }
 </script>
 
 <style lang="less" scoped>
-.van-radio-group {
-  margin: 5px 40px 10px;
-}
 input {
   border: 0;
   outline: none;
@@ -91,7 +82,7 @@ input {
   }
   .login-wrapper {
     width: 7.44rem;
-    height: 11.773333rem;
+    height: 10.773333rem;
     margin-top: 1.706667rem;
     border-radius: 0.266667rem;
     box-shadow: 0 0 0.533333rem 0 rgba(170, 170, 170, 1);
@@ -137,7 +128,7 @@ input {
       margin-top: 10px;
     }
     .forgot-pwd{
-        margin:10px auto .36rem 1.973333rem; 
+        margin:10px auto .56rem 1.973333rem; 
         height: .613333rem;
         line-height: .453333rem;
         opacity: 0.3;
