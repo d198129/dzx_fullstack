@@ -1,20 +1,20 @@
 <template>
   <div class="nav-bar">
     <ul class="nav-list">
-      <router-link tag="li" class="nav-list-item active" to="home">
-        <i class="iconfont icon-home"></i>
+      <router-link tag="li" class="nav-list-item" to="home">
+        <van-icon name="location" />
         <span>首页</span>
       </router-link>
-      <router-link tag="li" class="nav-list-item" to="category">
-        <i class="iconfont icon-2"></i>
-        <span>分类</span>
+      <router-link tag="li" class="nav-list-item" to="friend">
+        <van-icon name="friends" />
+        <span>朋友</span>
       </router-link>
-      <router-link tag="li" class="nav-list-item" to="cart">
-        <van-icon  name="shopping-cart-o" :badge="!count ? '' : count" />
-        <span>购物车</span>
+      <router-link tag="li" class="nav-list-item" to="news">
+        <van-icon name="bell" />
+        <span>消息</span>
       </router-link>
-      <router-link tag="li" class="nav-list-item" to="user">
-        <i class="iconfont icon-user"></i>
+      <router-link tag="li" class="nav-list-item" to="me">
+        <van-icon name="manager" />
         <span>我的</span>
       </router-link>
     </ul>
@@ -34,7 +34,7 @@
   width: 100%;
   padding: 5px 0;
   z-index: 1000;
-  background: #fff;
+  background: #ccc;
   transform: translateZ(0);
   -webkit-transform: translateZ(0);
   .nav-list {
@@ -57,10 +57,6 @@
       }
       span{
         font-size: 12px;
-      }
-      .van-icon-shopping-cart-o {
-        margin: 0 auto;
-        margin-bottom: 2px;
       }
     }
   }
