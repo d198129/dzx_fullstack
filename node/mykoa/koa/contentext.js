@@ -9,4 +9,15 @@ function defineGetter(property, name) {
   })
 }
 defineGetter('request', 'url')
+defineGetter('request', 'path')
+defineGetter('response', 'body')
+
+function defineSetter(property, name) {
+  proto.__defineSetter__(name, function (value) {
+    this[property][name] = value
+  })
+}
+
+defineSetter('response', 'body')
+
 module.exports = proto
