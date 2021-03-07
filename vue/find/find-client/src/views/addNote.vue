@@ -3,7 +3,22 @@
     <SHead :back="true" :name="'发布'" :me="false"></SHead>
     <div class="wrapper">
       <van-cell-group>
-        <van-field v-model="title" label="标题" placeholder="请输入标题" />
+        <van-field
+          readonly
+          clickable
+          label="标题"
+          :value="title"
+          placeholder="选择类别 "
+          @click="showPicker1 = true"
+        />
+        <van-popup v-model="showPicker1" round position="bottom">
+          <van-picker
+            show-toolbar
+            :columns="columns"
+            @cancel="showPicker1 = false"
+            @confirm="onConfirm1"
+          />
+        </van-popup>
         <van-field type="textarea" v-model="value" label="内容" autosize placeholder="请输入描述" maxlength="50" show-word-limit />
       </van-cell-group>
       <van-field
@@ -41,7 +56,9 @@ export default {
       title: '',
       value: '',
       time: '',
-      showPicker: false
+      showPicker: false,
+      showPicker1: false,
+      columns: ['一卡通', '身份证', '钥匙', '伞', '洗澡卡', '手机', '书', '其他'],
     }
   },
   methods: {
@@ -52,6 +69,10 @@ export default {
       this.time = time;
       console.log(time);
       this.showPicker = false;
+    },
+    onConfirm1(value) {
+      this.title = value;
+      this.showPicker1 = false;
     },
     addnote(){
       if (this.title.trim() == '') {
@@ -78,9 +99,9 @@ export default {
         });
         return;
       }
-      if (this.fileList.length < 1) {
+      if (this.fileList.length < 2) {
         Toast.fail({
-          message:'请上传至少一张图片',
+          message:'请上传至少两张图片',
           forbidClick: true,
           duration: 1000
         });
