@@ -71,3 +71,30 @@ transition，transform ，display flex，box-sizing，颜色渐变，动画
 # css选择器有哪些？优先级
 id选择器，类选择器，标签选择器，伪元素选择器，伪类元素选择器，属性选择器
 !important > 行内式 > 内部样式 > 外部样式 > 浏览器用户自定义 > 默认
+
+# fload 的display是什么
+block
+# 三栏布局的实现(三列布局)
+圣杯 ，双飞翼
+1. flex
+2. 两列定宽一列自适应 float + mrrgin
+3. display: table
+4. display: grid
+
+# display:table 和 table本身有什么区别
+display:table 声明能够让HTML元素和它的子节点像table元素一样使用，但是文件会比table小，div + css 逐行显示
+table是页面完全加载后才显示
+
+# 设置一个元素的背景色，背景色会填充哪些区域
+除margin外的所有区域 content + padding + border
+
+# inline-bloack，inline 和 block的区别，为什么img是inline还可以设置宽高
+置换元素不受css控制
+
+# 重绘 和 回流(重拍)
+
+# css画三角形
+width: 0;height: 0;border-right: 50px solid blue ;border-left: 50px solid blue ;border-buttom: 50px solid blue;
+
+# css布局种类
+圣杯布局，双飞翼布局，flex布局，绝对定位布局，表格布局，网格布局
