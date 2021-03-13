@@ -29,4 +29,70 @@ Object.prototype.toString.call() [object, Type]
 
 # 浏览器中的Eventloop 和 Node中的区别
 
-# 
+# cookie,  localStorage,  session,  indexDB 的区别
+4k  5M 5M  无限大
+携带在header中，影响请求的性能
+cookie：
+  value： token
+  http-only： 不能通过js访问cookie
+  secure：只能在HTTPS协议中携带
+  same-site：浏览器不能在跨域请求中携带cookie
+
+
+# 怎么判断页面是否加载完成
+load，DOMContentLoading (html完全加载)
+
+
+# 跨域怎么解决
+1. JSONP(只能用于get请求)
+2. cors() 后端实现cors，就可以实现跨域
+3. document.domain (只适用于二级域名相同的情况，a.test.com b.test.com)
+4. postMessage
+5. 代理 Nginx
+
+# 浏览器缓存
+缓存机制是为了避免资源的重复加载，提高整体页面的加载速度
+  - 强缓存：可以通过两种响应头来实现 Expires 和 Cache-Control,表示在缓存期间不需要请求
+  - 协商缓存：last-Modified(本地文件最后的修改日期)，If-Modified-SinceI(把last-Modified的值发给服务器)
+
+# Bable原理
+Token - AST  遍历AST - 生成新的代码
+
+# get 和 post 请求有什么区别
+1. 参数拼接
+2. get可以使用缓存，post不能使用缓存
+
+# 继承
+
+# 事件流
+1. 捕获
+2. 触发
+3. 冒泡
+
+# 如何让事件先冒泡，后捕获
+监听捕获和冒泡，分别对应相应的处理函数，先暂停执行捕获事件，直到冒泡事件执行完毕再执行捕获
+
+# 事件委托
+
+# new干了什么
+
+# 防抖，节流
+
+# js垃圾回收机制
+
+# 对象深克隆
+
+# once 函数
+
+# instanceof
+
+# 闭包
+
+# 深浅拷贝
+
+# 模块化
+ECMA规范，js
+export default a => import a from ''
+export a => import { a } from ''
+CommonJs 是node独有的规范，浏览器中使用就需要Browserify 解析
+module.export = { a } => require { a } = ''
